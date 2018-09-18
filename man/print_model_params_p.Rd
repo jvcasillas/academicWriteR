@@ -9,9 +9,9 @@ print_model_params_p(model, predictor, stat_type = "t", latex = TRUE)
 \arguments{
 \item{model}{A model object}
 
-\item{predictor}{The effect (fixed/random) you want to report}
+\item{predictor}{(character) The effect (fixed/random) you want to report}
 
-\item{stat_type}{The type of test (t or z)}
+\item{stat_type}{(character) The type of test (t or z)}
 
 \item{latex}{(Logical) If true, output is appropriate for LaTeX. Otherwise
 formatting is for markdown.}

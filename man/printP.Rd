@@ -8,7 +8,7 @@ symbol}
 printP(x, latex = TRUE)
 }
 \arguments{
-\item{x}{A p-value to round}
+\item{x}{(numeric) A p-value to round}
 
 \item{latex}{(Logical) If true, output is appropriate for LaTeX. Otherwise
 formatting is for markdown.}

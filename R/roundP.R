@@ -3,7 +3,7 @@
 #' This function takes a numeric value and rounds it. It is most useful for
 #' R output that is more than three decimal places long.
 #'
-#' @param x A p-value to round
+#' @param x (numeric) A p-value to round
 #' @keywords Round p-values
 #' @export
 #' @examples

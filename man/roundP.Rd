@@ -7,7 +7,7 @@
 roundP(x)
 }
 \arguments{
-\item{x}{A p-value to round}
+\item{x}{(numeric) A p-value to round}
 }
 \description{
 This function takes a numeric value and rounds it. It is most useful for

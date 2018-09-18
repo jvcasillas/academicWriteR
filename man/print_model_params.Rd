@@ -9,10 +9,10 @@ print_model_params(model, predictor, parameter)
 \arguments{
 \item{model}{A model object}
 
-\item{predictor}{The effect (fixed/random) you want to report}
+\item{predictor}{(character) The effect (fixed/random) you want to report}
 
-\item{parameter}{The parameter you want to report ('estimate', 'std.error',
-'statistic')}
+\item{parameter}{(character) The parameter you want to report ('estimate',
+'std.error', 'statistic')}
 }
 \description{
 This function takes a model object, a predictor, and a parameter and prints
