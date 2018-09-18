@@ -4,9 +4,9 @@
 #' the numeric output.
 #'
 #' @param model A model object
-#' @param predictor The effect (fixed/random) you want to report
-#' @param parameter The parameter you want to report ('estimate', 'std.error',
-#' 'statistic')
+#' @param predictor (character) The effect (fixed/random) you want to report
+#' @param parameter (character) The parameter you want to report ('estimate',
+#' 'std.error', 'statistic')
 #' @keywords Report parameter
 #' @export
 #' @examples
