@@ -11,14 +11,14 @@
 #' @keywords Round p-values
 #' @export
 #' @examples
-#' printP(0.03765)
-#' printP(0.0000001, latex = FALSE)
+#' print_pval(0.03765)
+#' print_pval(0.0000001, latex = FALSE)
 
 
-printP <- function(x, latex = TRUE) {
+print_pval <- function(x, latex = TRUE) {
 
   # Round pvalue
-  valOut <- roundP(x)
+  valOut <- round_pval(x)
 
   # For LaTeX and Markdown
   if (latex == TRUE) {

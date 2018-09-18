@@ -5,7 +5,6 @@
 #'
 #' @param model A model object
 #' @param predictor (character) The effect (fixed/random) you want to report
-#' @param stat_type (character) The type of test (t or z)
 #' @param latex (Logical) If true, output is appropriate for LaTeX. Otherwise
 #' formatting is for markdown.
 #' @keywords Report model parameter
@@ -22,22 +21,26 @@
 
 
 # Helper function for reporting model parameters in parenthesis
-print_model_params_p <- function(model, predictor, stat_type = "t", latex = TRUE) {
+print_model_params_p <- function(model, predictor, latex = TRUE) {
 
-  # Tidy model object
+  # Get tidy model object
   tidy_model <- suppressWarnings(broom::tidy(model, conf.int = TRUE))
 
-  # Extract wanted value from model output
+  # Extract values from model output
   ciLo <- round(tidy_model[tidy_model$term == predictor, 'conf.low'], 2)
   ciHi <- round(tidy_model[tidy_model$term == predictor, 'conf.high'], 2)
   stat <- round(tidy_model[tidy_model$term == predictor, 'statistic'], 2)
 
-  if (colnames(summary(model)$coef)[3] == "t value") {
+  # Determine test type and get pvalue
+  if ("t value" %in% colnames(summary(model)$coef)) {
     pval <- as.data.frame(summary(model)$coef)[predictor, ]$`Pr(>|t|)`
+    stat_type <- "t"
   } else {
     pval <- as.data.frame(summary(model)$coef)[predictor, ]$`Pr(>|z|)`
+    stat_type <- "z"
   }
 
+  # Determine output format
   if (latex == TRUE) {
     stat_start <- "; \\emph{"
     stat_end   <- "} = "
@@ -58,7 +61,7 @@ print_model_params_p <- function(model, predictor, stat_type = "t", latex = TRUE
                 stat_end,
                 stat,
                "; ",
-                printP(pval, latex = latex),
+                print_pval(pval, latex = latex),
                ")",
                "\n")
         )

@@ -30,10 +30,10 @@ print_nmc_p <- function(table, model, latex = TRUE) {
 
   if (latex == TRUE) {
     method <- "$\\chi^2$"
-    pval <- printP(praw, latex = TRUE)
+    pval <- print_pval(praw, latex = TRUE)
   } else {
     method <- "\U03C7^2"
-    pval <- printP(praw, latex = FALSE)
+    pval <- print_pval(praw, latex = FALSE)
   }
 
   # Print bare output to console so it can be used with latex

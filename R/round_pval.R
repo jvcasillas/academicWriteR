@@ -7,10 +7,10 @@
 #' @keywords Round p-values
 #' @export
 #' @examples
-#' roundP(0.03765)
-#' roundP(0.0000001)
+#' round_pval(0.03765)
+#' round_pval(0.0000001)
 
-roundP <- function(x) {
+round_pval <- function(x) {
 
   # Import pvalue to 3 decimal places (returns char)
   valIn <- sprintf("%.3f", x)
