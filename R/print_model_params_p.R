@@ -1,0 +1,68 @@
+#' Helper function for reporting model parameters in parenthesis
+#'
+#' This function takes a model object  and a predictor, and prints the output
+#' in parenthesis. Includes confidence intervals, stat type and p-values.
+#'
+#' @param model A model object
+#' @param predictor The effect (fixed/random) you want to report
+#' @param stat_type The type of test (t or z)
+#' @param latex (Logical) If true, output is appropriate for LaTeX. Otherwise
+#' formatting is for markdown.
+#' @keywords Report model parameter
+#' @export
+#' @examples
+#' library(lme4)
+#' library(lmerTest)
+#' library(broom.mixed)
+#' mod1 <- lm(mpg ~ wt, data = mtcars)
+#' mod2 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy,
+#'              REML = FALSE)
+#' print_model_params_p(model = mod1, predictor = "wt", latex = FALSE)
+#' print_model_params_p(model = mod2, predictor = "Days")
+
+
+# Helper function for reporting model parameters in parenthesis
+print_model_params_p <- function(model, predictor, stat_type = "t", latex = TRUE) {
+
+  # Tidy model object
+  tidy_model <- suppressWarnings(broom::tidy(model, conf.int = TRUE))
+
+  # Extract wanted value from model output
+  ciLo <- round(tidy_model[tidy_model$term == predictor, 'conf.low'], 2)
+  ciHi <- round(tidy_model[tidy_model$term == predictor, 'conf.high'], 2)
+  stat <- round(tidy_model[tidy_model$term == predictor, 'statistic'], 2)
+
+  if (colnames(summary(mod1)$coef)[3] == "t value") {
+    pval <- as.data.frame(summary(model)$coef)$`Pr(>|t|)`
+  } else {
+    pval <- as.data.frame(summary(model)$coef)$`Pr(>|z|)`
+  }
+
+  if (latex == TRUE) {
+    stat_start <- "; \\emph{"
+    stat_end   <- "} = "
+  } else {
+    stat_start <- "; *"
+    stat_end   <- "* = "
+  }
+
+  paste(
+    capture.output(
+      cat(
+        paste0("(CI low = ",
+                ciLo,
+               "; CI high = ",
+                ciHi,
+                stat_start,
+                stat_type,
+                stat_end,
+                stat,
+               "; ",
+                printP(pval, latex = latex),
+               ")",
+               "\n")
+        )
+      )
+    )
+
+}
