@@ -5,7 +5,7 @@
 #' order to be reported in an academic report written in LaTeX or markdown.
 #' It is most useful for R output that is more than three decimal places long.
 #'
-#' @param x A p-value to round
+#' @param x (numeric) A p-value to round
 #' @param latex (Logical) If true, output is appropriate for LaTeX. Otherwise
 #' formatting is for markdown.
 #' @keywords Round p-values
