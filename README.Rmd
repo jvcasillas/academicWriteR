@@ -37,3 +37,9 @@ There was an effect of `wt`
 
 There was an effect of `Days` 
 `r print_model_params_p(model = mod2, predictor = "Days", latex = F)`
+
+## Functions
+
+```{r, results='asis'}
+print_dir_ul(path = "./R")
+```

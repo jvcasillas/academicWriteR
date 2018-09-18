@@ -42,3 +42,15 @@ There was an effect of `wt` (CI low = -6.49; CI high = -4.2; *t* =
 
 There was an effect of `Days` (CI low = 8.9; CI high = 12.04; *t* =
 13.06; *p* &lt; 0.001)
+
+Functions
+---------
+
+    print_dir_ul(path = "./R")
+
+-   print\_model\_params\_p.R
+-   print\_model\_params.R
+-   print\_nmc\_p.R
+-   print\_pval.R
+-   print\_unordered\_list.R
+-   round\_pval.R
