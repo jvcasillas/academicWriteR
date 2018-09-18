@@ -1,0 +1,39 @@
+---
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Overview
+
+
+## Examples
+
+```{r}
+library(academicWriteR)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+mod1 <- lm(mpg ~ wt, data = mtcars)
+mod2 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy,
+             REML = FALSE)
+```
+
+## Rounding functions
+
+`r round_pval(0.03765)`
+`r round_pval(0.0000001)`
+
+## Printing functions
+
+`r print_pval(0.03765, latex = FALSE)`
+`r print_pval(0.0000001, latex = FALSE)`
+
+There was an effect of `wt` 
+`r print_model_params_p(model = mod1, predictor = "wt", latex = FALSE)`. 
+
+There was an effect of `Days` 
+`r print_model_params_p(model = mod2, predictor = "Days", latex = F)`
