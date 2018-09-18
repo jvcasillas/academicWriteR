@@ -4,8 +4,8 @@
 #' in parenthesis. Includes confidence intervals, stat type and p-values.
 #'
 #' @param model A model object
-#' @param predictor The effect (fixed/random) you want to report
-#' @param stat_type The type of test (t or z)
+#' @param predictor (character) The effect (fixed/random) you want to report
+#' @param stat_type (character) The type of test (t or z)
 #' @param latex (Logical) If true, output is appropriate for LaTeX. Otherwise
 #' formatting is for markdown.
 #' @keywords Report model parameter
@@ -32,10 +32,10 @@ print_model_params_p <- function(model, predictor, stat_type = "t", latex = TRUE
   ciHi <- round(tidy_model[tidy_model$term == predictor, 'conf.high'], 2)
   stat <- round(tidy_model[tidy_model$term == predictor, 'statistic'], 2)
 
-  if (colnames(summary(mod1)$coef)[3] == "t value") {
-    pval <- as.data.frame(summary(model)$coef)$`Pr(>|t|)`
+  if (colnames(summary(model)$coef)[3] == "t value") {
+    pval <- as.data.frame(summary(model)$coef)[predictor, ]$`Pr(>|t|)`
   } else {
-    pval <- as.data.frame(summary(model)$coef)$`Pr(>|z|)`
+    pval <- as.data.frame(summary(model)$coef)[predictor, ]$`Pr(>|z|)`
   }
 
   if (latex == TRUE) {
