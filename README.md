@@ -48,9 +48,9 @@ Functions
 
     print_dir_ul(path = "./R")
 
+-   print\_dir\_ul.R
 -   print\_model\_params\_p.R
 -   print\_model\_params.R
 -   print\_nmc\_p.R
 -   print\_pval.R
--   print\_unordered\_list.R
 -   round\_pval.R
