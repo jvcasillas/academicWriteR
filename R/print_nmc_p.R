@@ -9,6 +9,7 @@
 #' @param latex (Logical) If true, output is appropriate for LaTeX. Otherwise
 #' formatting is for markdown.
 #' @keywords Report nested model comparisons
+#' @import utils
 #' @export
 #' @examples
 #' library(lme4)
