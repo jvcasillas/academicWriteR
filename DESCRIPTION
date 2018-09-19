@@ -12,6 +12,6 @@ BugReports: https://github.com/jvcasillas/academicWriteR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    broom, lme4, lmerTest, broom.mixed, readr, tibble, tidytext, dplyr
+    broom, lme4, lmerTest, broom.mixed, readr, tibble, tidytext, dplyr, rlang
 LazyData: true
 RoxygenNote: 6.1.0

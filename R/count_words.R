@@ -7,6 +7,7 @@
 #' @param file A path to a .Rmd file
 #' @keywords Word count
 #' @import dplyr
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' # word_count("test.Rmd")
@@ -18,7 +19,7 @@ count_words <- function(file) {
     remove_front_matter(.) %>%
     remove_code_chunks(.) %>%
     remove_inline_code(.) %>%
-    tidytext::unnest_tokens(., output = words, input = value) %>%
+    tidytext::unnest_tokens(., output = .data$words, input = .data$value) %>%
     nrow()
   return(wc)
 }
@@ -32,29 +33,29 @@ is_odd <- function(x, val) {
 # Helper function to remove front matter (lines starting with "---" and
 # anything between)
 remove_front_matter <- function(x) {
-  mutate(x, is_code = cumsum(grepl("^---", value))) %>%
-    group_by(., is_code) %>%
-    mutate(., start_end = lag(is_code, 1)) %>%
+  mutate(x, is_code = cumsum(grepl("^---", .data$value))) %>%
+    group_by(., .data$is_code) %>%
+    mutate(., start_end = lag(.data$is_code, 1)) %>%
     ungroup(.) %>%
-    filter(., !is_odd(is_code), !is.na(start_end)) %>%
-    select(-is_code, -start_end)
+    filter(., !is_odd(.data$is_code), !is.na(.data$start_end)) %>%
+    select(-.data$is_code, -.data$start_end)
 }
 
 # Helper function for removing knitr code chunks (lines starting with "```"
 # and anything in between)
 remove_code_chunks <- function(x) {
-  mutate(x, is_code = cumsum(grepl("^```", value))) %>%
-    group_by(., is_code) %>%
-    mutate(., start_end = lag(is_code, 1)) %>%
+  mutate(x, is_code = cumsum(grepl("^```", .data$value))) %>%
+    group_by(., .data$is_code) %>%
+    mutate(., start_end = lag(.data$is_code, 1)) %>%
     ungroup(.) %>%
-    mutate(., is_odd = is_odd(is_code)) %>%
-    filter(., is_odd != TRUE, !is.na(start_end)) %>%
-    select(-is_code, -start_end, -is_odd)
+    mutate(., is_odd = is_odd(.data$is_code)) %>%
+    filter(., .data$is_odd != TRUE, !is.na(.data$start_end)) %>%
+    select(-.data$is_code, -.data$start_end, -.data$is_odd)
 }
 
 # Helper function to remove inline code (lines starting with "`r")
 remove_inline_code <- function(x) {
-  filter(x, !grepl("`r", value))
+  filter(x, !grepl("`r", .data$value))
 }
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
