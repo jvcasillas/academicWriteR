@@ -19,7 +19,7 @@ count_words <- function(file) {
     remove_front_matter(.) %>%
     remove_code_chunks(.) %>%
     remove_inline_code(.) %>%
-    tidytext::unnest_tokens(., output = .data$words, input = .data$value) %>%
+    tidytext::unnest_tokens(., output = .data$words, input = value) %>%
     nrow()
   return(wc)
 }
