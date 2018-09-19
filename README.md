@@ -43,14 +43,23 @@ There was an effect of `wt` (CI low = -6.49; CI high = -4.2; *t* =
 There was an effect of `Days` (CI low = 8.9; CI high = 12.04; *t* =
 13.06; *p* &lt; 0.001)
 
+Word count
+----------
+
+The `count_words` function will give an approximate count of words in
+.Rmd document.
+
 Functions
 ---------
 
     print_dir_ul(path = "./R")
 
+-   count\_words.R
 -   print\_dir\_ul.R
 -   print\_model\_params\_p.R
 -   print\_model\_params.R
 -   print\_nmc\_p.R
 -   print\_pval.R
 -   round\_pval.R
+
+This document contains 38 words.

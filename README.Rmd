@@ -38,8 +38,18 @@ There was an effect of `wt`
 There was an effect of `Days` 
 `r print_model_params_p(model = mod2, predictor = "Days", latex = F)`
 
+## Word count
+
+The `count_words` function will give an approximate count of words in .Rmd 
+document. 
+
+
 ## Functions
 
 ```{r, results='asis'}
 print_dir_ul(path = "./R")
 ```
+
+This document contains 
+`r academicWriteR::count_words("README.Rmd")`
+words. 
