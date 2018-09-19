@@ -19,6 +19,7 @@ count_words <- function(file) {
     remove_front_matter(.) %>%
     remove_code_chunks(.) %>%
     remove_inline_code(.) %>%
+    remove_html_comment(.) %>%
     tidytext::unnest_tokens(., output = .data$words, input = value) %>%
     nrow()
   return(wc)
@@ -56,6 +57,19 @@ remove_code_chunks <- function(x) {
 # Helper function to remove inline code (lines starting with "`r")
 remove_inline_code <- function(x) {
   filter(x, !grepl("`r", .data$value))
+}
+
+# Helper function to remove HTML comments (lines starting with "<!--" and "-->")
+remove_html_comment <- function(x) {
+  mutate(x, start_comment = cumsum(grepl("^<!--", .data$value)),
+            end_comment = cumsum(grepl("^-->", .data$value))) %>%
+    group_by(., .data$start_comment, .data$end_comment) %>%
+    mutate(., start_end = lag(.data$start_comment, 1)) %>%
+    ungroup(.) %>%
+    mutate(., remove = if_else(.data$start_comment - .data$end_comment == 1 |
+                               is.na(.data$start_end), 1, 0)) %>%
+    filter(., remove != TRUE) %>%
+    select(-.data$start_comment, -.data$end_comment, -.data$remove)
 }
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines

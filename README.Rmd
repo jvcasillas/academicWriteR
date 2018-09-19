@@ -53,3 +53,16 @@ print_dir_ul(path = "./R")
 This document contains 
 `r academicWriteR::count_words("README.Rmd")`
 words. 
+
+
+<!--
+this is a comment
+-->
+
+testing
+
+<!--
+another comment
+-->
+
+end
