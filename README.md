@@ -4,9 +4,9 @@
 ## Overview
 
 This is a package of helper functions that are useful for writing
-academic reports/manuscripts. The majority of the functions are for
-reporting statistical analysis, but there are also a few functions that
-were designed for project management and document preparation using
+academic reports/manuscripts. The majority of the functions were written
+for reporting statistical analyses, but there are also a few functions
+that were designed for project management and document preparation using
 `papaja`.
 
 ## Functions
@@ -152,6 +152,75 @@ standard errors
 `r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)`.**
 ```
 
+#### Directory structures
+
+The `print_dir_ul` function will print the files of a given directory as
+an unordered list. This function was originally written to improve
+project management. I typically use it in README files to print the
+files in the current directory.
+
+``` r
+print_dir_ul(path = ".")
+```
+
+    ## - academicWriteR.Rproj 
+    ##  - DESCRIPTION 
+    ##  - LICENSE 
+    ##  - man 
+    ##  - NAMESPACE 
+    ##  - R 
+    ##  - README.md 
+    ##  - README.Rmd
+
+If you set `results='asis'` in the knitr chunk you will get an unordered
+list in markdown/HTML.
+
+    ```{r, 'print_dir_ul-ex', results='asis'}
+    print_dir_ul(path = ".")
+    ```
+
+  - academicWriteR.Rproj
+  - DESCRIPTION
+  - LICENSE
+  - man
+  - NAMESPACE
+  - R
+  - README.md
+  - README.Rmd
+
+If you set `nested = TRUE` you can print the directory of your choice
+and the files nested within any subdirectories. Additionally, the
+`remove` argument can be used to exclude files/folders using regex.
+
+    ```{r, 'print_dir_ul-ex2'}
+    print_dir_ul(path = ".", nested = TRUE, remove = ".md")
+    ```
+
+    ## - academicWriteR.Rproj 
+    ##     -  
+    ## - DESCRIPTION 
+    ##     -  
+    ## - LICENSE 
+    ##     -  
+    ## - man 
+    ##     - count_words.Rd 
+    ##     - print_dir_ul.Rd 
+    ##     - print_model_params_p.Rd 
+    ##     - print_model_params.Rd 
+    ##     - print_nmc_p.Rd 
+    ##     - print_pval.Rd 
+    ##     - round_pval.Rd 
+    ## - NAMESPACE 
+    ##     -  
+    ## - R 
+    ##     - count_words.R 
+    ##     - print_dir_ul.R 
+    ##     - print_model_params_p.R 
+    ##     - print_model_params.R 
+    ##     - print_nmc_p.R 
+    ##     - print_pval.R 
+    ##     - round_pval.R
+
 ## Word count
 
 If your output is a word document, you will probably find this function
@@ -185,4 +254,4 @@ This document contains
 words. 
 ```
 
-This document contains 537 words.
+This document contains 613 words.

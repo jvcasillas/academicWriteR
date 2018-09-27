@@ -11,8 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Overview
 
 This is a package of helper functions that are useful for writing academic 
-reports/manuscripts. The majority of the functions are for reporting 
-statistical analysis, but there are also a few functions that were designed 
+reports/manuscripts. The majority of the functions were written for reporting 
+statistical analyses, but there are also a few functions that were designed 
 for project management and document preparation using `papaja`. 
 
 ## Functions
@@ -145,8 +145,43 @@ standard errors
 `r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)`.**
 ```
 
+#### Directory structures
 
+The `print_dir_ul` function will print the files of a given directory as an 
+unordered list. This function was originally written to improve project 
+management. I typically use it in README files to print the files in the 
+current directory. 
 
+```{r, 'print_dir_ul-ex'}
+print_dir_ul(path = ".")
+```
+
+If you set `results='asis'` in the knitr chunk you will get an unordered list 
+in markdown/HTML. 
+
+````
+```{r, 'print_dir_ul-ex', results='asis'}`r ''`
+print_dir_ul(path = ".")
+```
+````
+
+```{r, 'print_dir_ul-ex1', results='asis', echo=F}
+print_dir_ul(path = ".")
+```
+
+If you set `nested = TRUE` you can print the directory of your choice and the 
+files nested within any subdirectories. Additionally, the `remove` argument can 
+be used to exclude files/folders using regex. 
+
+````
+```{r, 'print_dir_ul-ex2'}`r ''`
+print_dir_ul(path = ".", nested = TRUE, remove = ".md")
+```
+````
+
+```{r, 'print_dir_ul-ex2', echo=F}
+print_dir_ul(path = ".", nested = TRUE, remove = ".md")
+```
 
 ## Word count
 
