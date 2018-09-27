@@ -30,10 +30,10 @@ print_nmc_p <- function(table, model, latex = TRUE) {
   praw   <- tidy_table[tidy_table$term == model, 'p.value']
 
   if (latex == TRUE) {
-    method <- "$\\chi^2$"
+    method <- "$\\chi^{2}$"
     pval <- print_pval(praw, latex = TRUE)
   } else {
-    method <- "\U03C7^2"
+    method <- "\U03C7^2^"
     pval <- print_pval(praw, latex = FALSE)
   }
 
