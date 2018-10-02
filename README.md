@@ -1,7 +1,5 @@
 
-<img src='https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png' align='right' width='275px' style="padding-left:5px;"/>
-
-## Overview
+## Overview <img src='https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png' align='right' width='275px' style="padding-left:5px;"/>
 
 This is a package of helper functions that are useful for writing
 academic reports/manuscripts. The majority of the functions were written
@@ -165,6 +163,7 @@ print_dir_ul(path = ".")
 
     ## - academicWriteR.Rproj 
     ##  - DESCRIPTION 
+    ##  - docs 
     ##  - LICENSE 
     ##  - man 
     ##  - NAMESPACE 
@@ -181,6 +180,7 @@ list in markdown/HTML.
 
   - academicWriteR.Rproj
   - DESCRIPTION
+  - docs
   - LICENSE
   - man
   - NAMESPACE
@@ -200,6 +200,17 @@ and the files nested within any subdirectories. Additionally, the
     ##     -  
     ## - DESCRIPTION 
     ##     -  
+    ## - docs 
+    ##     - authors.html 
+    ##     - docsearch.css 
+    ##     - docsearch.js 
+    ##     - index.html 
+    ##     - LICENSE-text.html 
+    ##     - link.svg 
+    ##     - pkgdown.css 
+    ##     - pkgdown.js 
+    ##     - pkgdown.yml 
+    ##     - reference 
     ## - LICENSE 
     ##     -  
     ## - man 

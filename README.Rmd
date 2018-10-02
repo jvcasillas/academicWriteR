@@ -6,9 +6,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<img src='https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png' align='right' width='275px' style="padding-left:5px;"/>
+## Overview <img src='https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png' align='right' width='275px' style="padding-left:5px;"/>
 
-## Overview
 
 This is a package of helper functions that are useful for writing academic 
 reports/manuscripts. The majority of the functions were written for reporting 
