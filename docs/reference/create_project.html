@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper function for reporting nested model comparisons — print_nmc_p • academicWriteR</title>
+<title>A new project function — create_project • academicWriteR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,10 @@
 
 
 
-<meta property="og:title" content="Helper function for reporting nested model comparisons — print_nmc_p" />
+<meta property="og:title" content="A new project function — create_project" />
 
-<meta property="og:description" content="This function takes a nested model comparison ANOVA object and prints the
-result in LaTeX or markdown. This currenlty only works for linear mixed
-effects model comparisons." />
+<meta property="og:description" content="This function will create a new project directory for you 
+with subdirectories, and .Rmd and .R templates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,47 +100,39 @@ effects model comparisons." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper function for reporting nested model comparisons</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jvcasillas/academicWriteR/blob/master/R/print_nmc_p.R'><code>R/print_nmc_p.R</code></a></small>
-    <div class="hidden name"><code>print_nmc_p.Rd</code></div>
+    <h1>A new project function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jvcasillas/academicWriteR/blob/master/R/create_project.R'><code>R/create_project.R</code></a></small>
+    <div class="hidden name"><code>create_project.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function takes a nested model comparison ANOVA object and prints the
-result in LaTeX or markdown. This currenlty only works for linear mixed
-effects model comparisons.</p>
+    <p>This function will create a new project directory for you 
+with subdirectories, and .Rmd and .R templates.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>print_nmc_p</span>(<span class='no'>table</span>, <span class='no'>model</span>, <span class='kw'>latex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_project"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"html"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>table</th>
-      <td><p>An ANOVA table</p></td>
+      <th>name</th>
+      <td><p>A name for your project</p></td>
     </tr>
     <tr>
-      <th>model</th>
-      <td><p>The model you want to report</p></td>
-    </tr>
-    <tr>
-      <th>latex</th>
-      <td><p>(Logical) If true, output is appropriate for LaTeX. Otherwise
-formatting is for markdown.</p></td>
+      <th>type</th>
+      <td><p>A valid .Rmd output (html, pdf, word)</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='fl'>1</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>, <span class='kw'>REML</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='fl'>1</span> + <span class='no'>Days</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>,
-             <span class='kw'>REML</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>aov_table</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/anova'>anova</a></span>(<span class='no'>mod1</span>, <span class='no'>mod2</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"Chisq"</span>)
-<span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>)</div><div class='output co'>#&gt; [1] "($\\chi^{2}$(1) = 116.46; \\emph{p} &lt; 0.001)"</div><div class='input'><span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>, <span class='kw'>latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "(χ^2^(1) = 116.46; *p* &lt; 0.001)"</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Create a new project with html report</span>
+<span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'myProject'</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'html'</span>)</div><div class='output co'>#&gt; myProject created.
+#&gt; Secondary structure added.
+#&gt; Finished. :) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,0 +1,15 @@
+---
+title: 'myProject'
+subtitle: ''
+author: ''
+date: 'Last update: `r Sys.time()`'
+output: html_document
+---
+
+```{r echo=FALSE}
+library(knitr)
+read_chunk('../scripts/myProject.R')
+```
+
+```{r, 'load', echo=FALSE}
+```
