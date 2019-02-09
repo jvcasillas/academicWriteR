@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="A new project function — create_project" />
 
-<meta property="og:description" content="This function will create a new project directory for you 
+<meta property="og:description" content="This function will create a new project directory for you
 with subdirectories, and .Rmd and .R templates." />
 <meta name="twitter:card" content="summary" />
 
@@ -107,12 +107,12 @@ with subdirectories, and .Rmd and .R templates." />
 
     <div class="ref-description">
     
-    <p>This function will create a new project directory for you 
+    <p>This function will create a new project directory for you
 with subdirectories, and .Rmd and .R templates.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_project"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"html"</span>)</pre>
+    <pre class="usage"><span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_project"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pdf"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,9 +130,8 @@ with subdirectories, and .Rmd and .R templates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a new project with html report</span>
-<span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'myProject'</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'html'</span>)</div><div class='output co'>#&gt; myProject created.
-#&gt; Secondary structure added.
-#&gt; Finished. :) </div></pre>
+<span class='fu'>create_project</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'myProject'</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'pdf'</span>)</div><div class='output co'>#&gt; <span class='error'>Error in create_project(name = "myProject", type = "pdf"): </span>
+#&gt; <span class='error'>This directory already exists. Choose another name or delete the poser directory.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

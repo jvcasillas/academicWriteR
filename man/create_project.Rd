@@ -4,7 +4,7 @@
 \alias{create_project}
 \title{A new project function}
 \usage{
-create_project(name = "my_project", type = "html")
+create_project(name = "my_project", type = "pdf")
 }
 \arguments{
 \item{name}{A name for your project}
@@ -12,11 +12,11 @@ create_project(name = "my_project", type = "html")
 \item{type}{A valid .Rmd output (html, pdf, word)}
 }
 \description{
-This function will create a new project directory for you 
+This function will create a new project directory for you
 with subdirectories, and .Rmd and .R templates.
 }
 \examples{
 # Create a new project with html report
-create_project(name = 'myProject', type = 'html')
+create_project(name = 'myProject', type = 'pdf')
 }
 \keyword{projects}
