@@ -3,7 +3,7 @@ title: 'myProject'
 subtitle: ''
 author: ''
 date: 'Last update: `r Sys.time()`'
-output: html_document
+output: pdf_document
 ---
 
 ```{r echo=FALSE}
