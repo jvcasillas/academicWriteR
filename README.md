@@ -93,8 +93,8 @@ In a typical write-up of the results we might say something like:
 
 **Miles per gallon varied as a function of `weight` (wt). Specifically,
 a 1-unit increase in weight was associated with a decrease in `mpg` of
--5.34 +/- 0.56 standard errors (CI low = -6.49; CI high = -4.2; *t* =
--9.56; *p* \< .001).**
+-5.34 +/- 0.56 standard errors (CI = \[-6.49, -4.2\]; *t* = -9.56; *p*
+\< .001).**
 
 The aforementioned sentence was written in RMarkdown like this:
 
@@ -102,10 +102,8 @@ The aforementioned sentence was written in RMarkdown like this:
 Miles per gallon varied as a function of `weight` (wt). Specifically, a 
 1-unit increase in weight was associated with a decrease in `mpg` of 
 `r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'estimate')` 
-+/- 
-`r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')` 
-standard errors 
-`r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)`. 
++/- `r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')`
+standard errors `r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)`.
 ```
 
 Here I use two print functions: `print_model_params` and
@@ -136,8 +134,8 @@ And a possible write-up:
 
 **There was a main effect of days (χ<sup>2</sup>(1) = 116.46; *p* \<
 .001). Specifically, a change of one day was associated with an increase
-in reaction time of 10.47 ms +/- 0.8 standard errors (CI low = 8.9; CI
-high = 12.04; *t* = 13.06; *p* \< .001).**
+in reaction time of 10.47 ms +/- 0.8 standard errors (CI = \[8.9,
+12.04\]; *t* = 13.06; *p* \< .001).**
 
 The above paragraph was written as follows:
 
@@ -162,12 +160,12 @@ print_model_param(lmer_mod1, "(Intercept)", latex = F)
 ```
 
 Ex.  
-The intercept differed from 0 (\(\beta = 37.29\), SE \(= 1.88\), CI
-\(=\) \[33.45, 41.12\],  \(= 19.86\)  \< .001).
+The intercept differed from 0 (β  =  37.29; SE  =  1.88; CI  =  \[33.45,
+41.12\]; *t*  =  19.86; *p* \< .001).
 
 Ex.  
-The intercept differed from 0 (\(\beta = 251.41\), SE \(= 9.51\), CI
-\(=\) \[232.77, 270.04\],  \(= 26.45\)  \< .001).
+The intercept differed from 0 (β  =  251.41; SE  =  9.51; CI  = 
+\[232.77, 270.04\]; *t*  =  26.45; *p* \< .001).
 
 #### Directory structures
 
@@ -261,8 +259,8 @@ and the files nested within any subdirectories. Additionally, the
 
 If your output is a word document, you will probably find this function
 to be of little value. However, if your manuscript is knit as a PDF, you
-have probably discovered that there isn’t a non-trivial way to get a
-wordcount, especially in a dynamic document.
+have probably discovered that there isn’t a straightforward way to get a
+word count, especially in a dynamic document.
 
 The `count_words` function will give an approximate count of words in an
 .Rmd document. It is not perfect—it is still a work in progress—, but it
@@ -290,4 +288,4 @@ This document contains
 words. 
 ```
 
-This document contains 634 words.
+This document contains 637 words.
