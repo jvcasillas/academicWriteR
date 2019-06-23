@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">academicWriteR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -78,11 +78,13 @@
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">academicWriteR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/academicWriteR/topics/print_dir_ul">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"./R"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">academicWriteR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/academicWriteR/topics/print_dir_ul">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"./R"</span>)</a></code></pre></div>
 <ul>
 <li>count_words.R</li>
 <li>create_project.R</li>
+<li>normal_approximation.R</li>
 <li>print_dir_ul.R</li>
+<li>print_model_param.R</li>
 <li>print_model_params_p.R</li>
 <li>print_model_params.R</li>
 <li>print_nmc_p.R</li>
@@ -97,79 +99,84 @@
 <h3 class="hasAnchor">
 <a href="#rounding" class="anchor"></a>Rounding</h3>
 <p><code>academicWriteR</code> includes a rounding function, <code>round_pval</code>, specifically for p-values. It is precise up to the thousandths column. Anything smaller than 0.001 is rounded to 0.001. <code>round_pval</code> is used in the printing functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(academicWriteR)
-
-<span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.03765</span>) 
-<span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.0000001</span>)
-<span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.07</span>)</code></pre></div>
-<pre><code>## [1] 0.039
-## [1] 0.001
-## [1] 0.08</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(academicWriteR)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.03765</span>) </a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.0000001</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.07</span>)</a></code></pre></div>
+<pre><code>## [1] ".038"
+## [1] ".001"
+## [1] ".07"</code></pre>
 </div>
 <div id="printing-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#printing-functions" class="anchor"></a>Printing functions</h3>
 <p>The printing functions were made to facilitate reporting statistical models in RMarkdown using <code>papaja</code>. <code>papaja</code> comes with it’s own printing functions but I found that I am constantly tinkering with them to get things to work the way I prefer, thus I decided to make my own.</p>
 <p>The first is a wrapper around the <code>round_pval</code> function: <code>print_pval</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.03765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><em>p</em> &lt; 0.039.</p>
-<p>If the value is above 0.05 the greater than/less than symbol changes appropriately and is maxed at 0.05.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.0765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><em>p</em> &gt; 0.05.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.03765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><em>p</em> = .038.</p>
+<p>P-values are printed exactly unless they are less than 0.001. Trailing 0’s are deleted.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.0765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><em>p</em> = .076.</p>
 <p>This function is included in other printing functions. Set <code>latex = TRUE</code> is the output is LaTeX.</p>
 <div id="lm-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#lm-example" class="anchor"></a><code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> example</h4>
 <p>The printing functions are used for reporting the results of statistical analyses. There are designed to be used in in-line <code>knitr</code> chunks (i.e., <code>`r 1 + 1`</code>) in an RMarkdown document. Instead of going in to more detail here, I will just work through and example. First, I will fit a linear model with the <code>lm</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm_mod1)<span class="op">$</span>coef</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">lm_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm_mod1)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
 ## (Intercept) 37.285126   1.877627 19.857575 8.241799e-19
 ## wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p>In a typical write-up of the results we might say something like:</p>
-<p><strong>Miles per gallon varied as a function of <code>weight</code> (wt). Specifically, a 1-unit increase in weight was associated with a decrease in <code>mpg</code> of -5.34 +/- 0.56 standard errors (CI low = -6.49; CI high = -4.2; <em>t</em> = -9.56; <em>p</em> &lt; 0.001).</strong></p>
-<p>The aforemention sentence was written in RMarkdown like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Miles per gallon varied as a <span class="cf">function</span> of <span class="st">`</span><span class="dt">weight</span><span class="st">`</span> (wt). Specifically, a 
-<span class="dv">1</span><span class="op">-</span>unit increase <span class="cf">in</span> weight was associated with a decrease <span class="cf">in</span> <span class="st">`</span><span class="dt">mpg</span><span class="st">`</span> of 
-<span class="st">`</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'estimate')</span><span class="st">`</span> 
-<span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> </span>
-<span class="st">`</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')</span><span class="st">`</span> 
-standard errors 
-<span class="st">`</span><span class="dt">r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)</span><span class="st">`</span>. </code></pre></div>
+<p><strong>Miles per gallon varied as a function of <code>weight</code> (wt). Specifically, a 1-unit increase in weight was associated with a decrease in <code>mpg</code> of -5.34 +/- 0.56 standard errors (CI = [-6.49, -4.2]; <em>t</em> = -9.56; <em>p</em> &lt; .001).</strong></p>
+<p>The aforementioned sentence was written in RMarkdown like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">Miles per gallon varied as a <span class="cf">function</span> of <span class="st">`</span><span class="dt">weight</span><span class="st">`</span> (wt). Specifically, a </a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="dv">1</span><span class="op">-</span>unit increase <span class="cf">in</span> weight was associated with a decrease <span class="cf">in</span> <span class="st">`</span><span class="dt">mpg</span><span class="st">`</span> of </a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">`</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'estimate')</span><span class="st">`</span> </a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> `</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb8-5" title="5">standard errors <span class="st">`</span><span class="dt">r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)</span><span class="st">`</span>.</a></code></pre></div>
 <p>Here I use two print functions: <code>print_model_params</code> and <code>print_model_params_p</code>. The <code>_p</code> variant referes to parenthesis. In other words it prints the parameter information that I typically put between parenthesis. Notice each in-line chunk is given it’s own line (more on this below).</p>
 </div>
 <div id="lmer-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#lmer-example" class="anchor"></a><code><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer()</a></code> example</h4>
 <p>Here is another example using <code>lme4</code> objects.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lmerTest)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom.mixed)
-lmer_mod0 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)
-lmer_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)
-model_comparison &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(lmer_mod0, lmer_mod1, <span class="dt">test =</span> <span class="st">'Chisq'</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lmer_mod1)<span class="op">$</span>coef</code></pre></div>
-<pre><code>##              Estimate Std. Error        df  t value     Pr(&gt;|t|)
-## (Intercept) 251.40510  9.5061852  24.49054 26.44648 1.588481e-19
-## Days         10.46729  0.8017354 162.00000 13.05579 4.462733e-27</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lmerTest)</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom.mixed)</a>
+<a class="sourceLine" id="cb9-4" title="4">lmer_mod0 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</a>
+<a class="sourceLine" id="cb9-5" title="5">lmer_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</a>
+<a class="sourceLine" id="cb9-6" title="6">model_comparison &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(lmer_mod0, lmer_mod1, <span class="dt">test =</span> <span class="st">'Chisq'</span>)</a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lmer_mod1)<span class="op">$</span>coef</a></code></pre></div>
+<pre><code>##              Estimate Std. Error        df  t value    Pr(&gt;|t|)
+## (Intercept) 251.40510  9.5061887  24.49051 26.44647 1.58857e-19
+## Days         10.46729  0.8017354 162.00001 13.05579 4.46271e-27</code></pre>
 <p>And a possible write-up:</p>
-<p><strong>There was a main effect of days (χ<sup>2</sup>(1) = 116.46; <em>p</em> &lt; 0.001). Specifically, a change of one day was associated with an increase in reaction time of 10.47 ms +/- 0.8 standard errors (CI low = 8.9; CI high = 12.04; <em>t</em> = 13.06; <em>p</em> &lt; 0.001).</strong></p>
+<p><strong>There was a main effect of days (χ<sup>2</sup>(1) = 116.46; <em>p</em> &lt; .001). Specifically, a change of one day was associated with an increase in reaction time of 10.47 ms +/- 0.8 standard errors (CI = [8.9, 12.04]; <em>t</em> = 13.06; <em>p</em> &lt; .001).</strong></p>
 <p>The above paragraph was written as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">**</span>There was a main effect of days 
-<span class="st">`</span><span class="dt">r print_nmc_p(table = model_comparison, model = 'lmer_mod1', latex = FALSE)</span><span class="st">`</span>. 
-Specifically, a change of one day was associated with an increase <span class="cf">in</span> reaction 
-time of 
-<span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'estimate')</span><span class="st">`</span> 
-ms <span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> </span>
-<span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'std.error')</span><span class="st">`</span> 
-standard errors 
-<span class="st">`</span><span class="dt">r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)</span><span class="st">`</span>.<span class="op">**</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="op">**</span>There was a main effect of days </a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">`</span><span class="dt">r print_nmc_p(table = model_comparison, model = 'lmer_mod1', latex = FALSE)</span><span class="st">`</span>. </a>
+<a class="sourceLine" id="cb11-3" title="3">Specifically, a change of one day was associated with an increase <span class="cf">in</span> reaction </a>
+<a class="sourceLine" id="cb11-4" title="4">time of </a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'estimate')</span><span class="st">`</span> </a>
+<a class="sourceLine" id="cb11-6" title="6">ms <span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'std.error')</span><span class="st">`</span> </a>
+<a class="sourceLine" id="cb11-8" title="8">standard errors </a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="st">`</span><span class="dt">r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)</span><span class="st">`</span>.<span class="op">**</span></a></code></pre></div>
+<p>If you don’t interpret the effect directly in the prose you can print all the parameters at once using <code><a href="reference/print_model_param.html">print_model_param(model, parameter)</a></code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lm_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lmer_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a></code></pre></div>
+<p>Ex.<br>
+The intercept differed from 0 (β  =  37.29; SE  =  1.88; CI  =  [33.45, 41.12]; <em>t</em>  =  19.86; <em>p</em> &lt; .001).</p>
+<p>Ex.<br>
+The intercept differed from 0 (β  =  251.41; SE  =  9.51; CI  =  [232.77, 270.04]; <em>t</em>  =  26.45; <em>p</em> &lt; .001).</p>
 </div>
 <div id="directory-structures" class="section level4">
 <h4 class="hasAnchor">
 <a href="#directory-structures" class="anchor"></a>Directory structures</h4>
 <p>The <code>print_dir_ul</code> function will print the files of a given directory as an unordered list. This function was originally written to improve project management. I typically use it in README files to print the files in the current directory.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a></code></pre></div>
 <pre><code>## - academicWriteR.Rproj 
 ##  - DESCRIPTION 
 ##  - docs 
@@ -218,7 +225,9 @@ print_dir_ul(path = ".", nested = TRUE, remove = ".md")
 ## - man 
 ##     - count_words.Rd 
 ##     - create_project.Rd 
+##     - normal_approximation.Rd 
 ##     - print_dir_ul.Rd 
+##     - print_model_param.Rd 
 ##     - print_model_params_p.Rd 
 ##     - print_model_params.Rd 
 ##     - print_nmc_p.Rd 
@@ -229,7 +238,9 @@ print_dir_ul(path = ".", nested = TRUE, remove = ".md")
 ## - R 
 ##     - count_words.R 
 ##     - create_project.R 
+##     - normal_approximation.R 
 ##     - print_dir_ul.R 
+##     - print_model_param.R 
 ##     - print_model_params_p.R 
 ##     - print_model_params.R 
 ##     - print_nmc_p.R 
@@ -241,7 +252,7 @@ print_dir_ul(path = ".", nested = TRUE, remove = ".md")
 <div id="word-count" class="section level2">
 <h2 class="hasAnchor">
 <a href="#word-count" class="anchor"></a>Word count</h2>
-<p>If your output is a word document, you will probably find this function to be of little value. However, if your manuscript is knit as a PDF, you have probably discovered that there isn’t a non-trivial way to get a wordcount, especially in a dynamic document.</p>
+<p>If your output is a word document, you will probably find this function to be of little value. However, if your manuscript is knit as a PDF, you have probably discovered that there isn’t a straightforward way to get a word count, especially in a dynamic document.</p>
 <p>The <code>count_words</code> function will give an approximate count of words in an .Rmd document. It is not perfect—it is still a work in progress—, but it is pretty good if you are careful in how you write. The function uses regex to remove knitr code chunks, the standard variety as well as in-line code. For this reason it is best to keep in-line code chunks on their own line (to avoid not counting words that are also on the same line). Also, when using comments in RMarkdown (i.e., <code>&lt;!-- comment --&gt;</code>) one should keep each arrow on its own line. For example,</p>
 <pre><code>&lt;!--
 This is a comment
@@ -249,10 +260,10 @@ This is a comment
 <p>If you write your comments like this:</p>
 <pre><code>&lt;!-- this is a comment --&gt;</code></pre>
 <p>no words will be counted after this point in the document (I am working on fixing this).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">This document contains 
-<span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span>
-words. </code></pre></div>
-<p>This document contains 613 words.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">This document contains </a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb20-3" title="3">words. </a></code></pre></div>
+<p>This document contains 637 words.</p>
 </div>
   </div>
 

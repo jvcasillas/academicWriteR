@@ -10,18 +10,23 @@
 #' round_pval(0.03765)
 #' round_pval(0.0000001)
 
+
+# Must delete trailing 0
+# must print exact value unless it is
+# less than .001
+
+
 round_pval <- function(x) {
 
   # Import pvalue to 3 decimal places (returns char)
-  valIn <- sprintf("%.3f", x)
+  val_in <- sprintf("%.3f", x)
 
-  # Get last char
-  lastChar <- substr(valIn, start = 5, stop = 5)
+  # If values is less than 0.001, then set to .001,
+  # Otherwise print as is w/o leading 0
+  val_out <- ifelse(
+    val_in < 0.001,
+    yes = ".001",
+    no = substr(as.character(as.numeric(val_in)), start = 2, stop = 5))
 
-  # If/then chain to determine rounded pvalue
-  valOut <- ifelse(lastChar != "0", yes = as.numeric(valIn) + 0.001, no =
-                   ifelse(as.numeric(valIn) == 0, yes = 0.001,
-                          no = as.numeric(valIn) + 0.01))
-
-  return(valOut)
+  return(val_out)
 }

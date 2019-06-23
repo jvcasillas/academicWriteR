@@ -52,10 +52,11 @@ print_model_params_p <- function(model, predictor, latex = TRUE) {
   paste(
     capture.output(
       cat(
-        paste0("(CI low = ",
+        paste0("(CI = [",
                 ciLo,
-               "; CI high = ",
+               ", ",
                 ciHi,
+               "]",
                 stat_start,
                 stat_type,
                 stat_end,

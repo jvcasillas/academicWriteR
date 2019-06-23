@@ -65,7 +65,7 @@ effects model comparisons." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">academicWriteR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@ formatting is for markdown.</p></td>
 <span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='fl'>1</span> + <span class='no'>Days</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>,
              <span class='kw'>REML</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>aov_table</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/anova'>anova</a></span>(<span class='no'>mod1</span>, <span class='no'>mod2</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"Chisq"</span>)
-<span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>)</div><div class='output co'>#&gt; [1] "($\\chi^{2}$(1) = 116.46; \\emph{p} &lt; 0.001)"</div><div class='input'><span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>, <span class='kw'>latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "(χ^2^(1) = 116.46; *p* &lt; 0.001)"</div></pre>
+<span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>)</div><div class='output co'>#&gt; [1] "($\\chi^{2}$(1) = 116.46; \\emph{p} &lt; .001)"</div><div class='input'><span class='fu'>print_nmc_p</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='no'>aov_table</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>'mod2'</span>, <span class='kw'>latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "(χ^2^(1) = 116.46; *p* &lt; .001)"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

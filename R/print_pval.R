@@ -18,22 +18,23 @@
 print_pval <- function(x, latex = TRUE) {
 
   # Round pvalue
-  valOut <- round_pval(x)
+  val_out <- round_pval(x)
+  val_num <- as.numeric(val_out)
 
   # For LaTeX and Markdown
   if (latex == TRUE) {
 
     # If/then to determine LaTeX output w/ symbol
-    result <- ifelse(valOut <= 0.05,
-                   yes = paste0("\\emph{p} < ", valOut),
-                   no = "\\emph{p} > 0.05")
+    result <- ifelse(val_num <= 0.001,
+                     yes = paste0("\\emph{p} < ", val_out),
+                     no = paste0("\\emph{p} = ", val_out))
 
   } else {
 
     # If/then to determine markdown output w/ symbol
-    result <- ifelse(valOut <= 0.05,
-                   yes = paste0("*p* < ", valOut),
-                   no = "*p* > 0.05")
+    result <- ifelse(val_num <= 0.001,
+                     yes = paste0("*p* < ", val_out),
+                     no = paste0("*p* = ", val_out))
 
   }
 
