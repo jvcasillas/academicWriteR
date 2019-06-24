@@ -30,21 +30,8 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
 
-  if (latex == TRUE) {
-  line <- paste0(
-    "($\\beta = ", mod_out[, "estimate"],
-    "$; SE $= ", mod_out[, "std.error"],
-    "$; CI $=$ [", mod_out[, "conf.low"], ", ", mod_out[, "conf.high"],
-    "]; \\emph{t} $= ", mod_out[, "statistic"], "$; ",
-     print_pval(mod_out[, "p.value"]), ")")
-  } else {
-  line <- paste0(
-    "(&beta; &nbsp;=&nbsp; ", mod_out[, "estimate"],
-    "; SE &nbsp;=&nbsp; ", mod_out[, "std.error"],
-    "; CI &nbsp;=&nbsp; [", mod_out[, "conf.low"], ", ", mod_out[, "conf.high"],
-    "]; *t* &nbsp;=&nbsp; ", mod_out[, "statistic"], "; ",
-     print_pval(mod_out[, "p.value"], latex = F), ")")
-  }
+  line <- print_builder(mod_out, latex = latex)
+
   return(line)
 }
 
@@ -68,21 +55,8 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
     mod_out$p.value <- normal_approximation(mod_out$statistic)
   }
 
-  if (latex == TRUE) {
-  line <- paste0(
-    "($\\beta = ", mod_out[, "estimate"],
-    "$; SE $= ", mod_out[, "std.error"],
-    "$; CI $=$ [", mod_out[, "conf.low"], ", ", mod_out[, "conf.high"],
-    "]; \\emph{t} $= ", mod_out[, "statistic"], "$; ",
-     print_pval(mod_out[, "p.value"]), ")")
-  } else {
-  line <- paste0(
-    "(&beta; &nbsp;=&nbsp; ", mod_out[, "estimate"],
-    "; SE &nbsp;=&nbsp; ", mod_out[, "std.error"],
-    "; CI &nbsp;=&nbsp; [", mod_out[, "conf.low"], ", ", mod_out[, "conf.high"],
-    "]; *t* &nbsp;=&nbsp; ", mod_out[, "statistic"], "; ",
-     print_pval(mod_out[, "p.value"], latex = F), ")")
-  }
+  line <- print_builder(mod_out, latex = latex)
+
   return(line)
 }
 

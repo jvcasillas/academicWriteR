@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • academicWriteR</title>
+<title>Print builder — print_builder • academicWriteR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Print builder — print_builder" />
+
+<meta property="og:description" content="A series of helper functions for printing model parameters" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -94,103 +97,46 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Print builder</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jvcasillas/academicWriteR/blob/master/R/print_builder.R'><code>R/print_builder.R</code></a></small>
+    <div class="hidden name"><code>print_builder.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>A series of helper functions for printing model parameters</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="count_words.html">count_words()</a></code> </p>
-        </td>
-        <td><p>A function for counting words in an Rmarkdown document.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_project.html">create_project()</a></code> </p>
-        </td>
-        <td><p>A new project function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normal_approximation.html">normal_approximation()</a></code> </p>
-        </td>
-        <td><p>Calculate p-values using the normal approximation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_builder.html">print_builder()</a></code> </p>
-        </td>
-        <td><p>Print builder</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_dir_ul.html">print_dir_ul()</a></code> </p>
-        </td>
-        <td><p>An function to generate unordered lists from the directory structure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_model_param.html">print_model_param()</a></code> </p>
-        </td>
-        <td><p>Print model parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_model_params.html">print_model_params()</a></code> </p>
-        </td>
-        <td><p>Helper function for reporting individual model parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_model_params_p.html">print_model_params_p()</a></code> </p>
-        </td>
-        <td><p>Helper function for reporting model parameters in parenthesis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_nmc_p.html">print_nmc_p()</a></code> </p>
-        </td>
-        <td><p>Helper function for reporting nested model comparisons</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_pval.html">print_pval()</a></code> </p>
-        </td>
-        <td><p>A helper function to round p-values and paste less than or greater than
-symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="round_pval.html">round_pval()</a></code> </p>
-        </td>
-        <td><p>A rounding function for pvalues</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>print_builder</span>(<span class='no'>model</span>, <span class='kw'>latex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>a model object</p></td>
+    </tr>
+    <tr>
+      <th>latex</th>
+      <td><p>Output is LaTeX or markdown</p></td>
+    </tr>
     </table>
-  </div>
+    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>stringr</span>)</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
