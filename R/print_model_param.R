@@ -41,6 +41,7 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 #' library(lme4)
 #' library(dplyr)
 #' mod1a <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
+#' print_model_param(mod1a, "Days")
 
 print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
@@ -56,6 +57,24 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
   }
 
   line <- print_builder(mod_out, latex = latex)
+
+  return(line)
+}
+
+#' @export
+#' @examples
+#'
+
+print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
+
+  # Tidy model to facilitate printing
+  mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
+    mutate_if(., is.numeric, round, digits = 2)
+
+  # Filter row with parameter of interest
+  mod_out <- mod[mod$term == parameter, ]
+
+  line <- print_builder.brmsfit(mod_out, latex = latex)
 
   return(line)
 }

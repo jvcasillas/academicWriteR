@@ -15,7 +15,7 @@ print_builder(model, latex = TRUE)
 A series of helper functions for printing model parameters
 }
 \examples{
-library(stringr)
+
 }
 \keyword{Report}
 \keyword{model}

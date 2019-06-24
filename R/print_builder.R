@@ -7,11 +7,16 @@
 #' @keywords Report model
 #' @export
 #' @examples
-#' library(stringr)
+#'
+
+print_builder <- function(model, latex = TRUE) {
+  UseMethod("print_builder")
+}
+
 
 # Generic builder
-print_builder <- function(model, latex = TRUE) {
-  out <- paste0(
+print_builder.default <- function(model, latex = TRUE) {
+  out <- paste(sep = "; ",
     parameterize(model[, "estimate"], latex = latex),
     std_error(model[, "std.error"], latex = latex),
     confidence(model[, "conf.low"], model[, "conf.high"], latex = latex),
@@ -26,15 +31,26 @@ print_builder <- function(model, latex = TRUE) {
   return(out)
 }
 
-# Separate elements in builder
-sep <- function(x, latex = TRUE) {
-  if (latex == TRUE) {
-    sep <- "; "
-  } else {
-    sep <- ";&nbsp;"
+# Builder for bayesian models
+print_builder.brmsfit <- function(model, latex = TRUE) {
+  out <- paste(sep = "; ",
+    parameterize(model[, "estimate"], latex = latex),
+    std_error(model[, "std.error"], latex = latex),
+    confidence(model[, "conf.low"], model[, "conf.high"], latex = latex)) %>%
+      parenthesize()
+
+  if (latex == FALSE) {
+    out <- gsub("-", "&minus;", out)
   }
-  return(sep)
+
+  return(out)
 }
+
+
+
+
+
+
 
 # Put parenthesis around something
 parenthesize <- function(x) {
@@ -73,9 +89,9 @@ mathesize <- function(x) {
 # Build parameter estimate
 parameterize <- function(x, latex = TRUE) {
   if (latex == TRUE) {
-    beta <- paste0("$\\beta ", equalize(latex = TRUE), " ", x, "$", sep())
+    beta <- paste0("$\\beta ", equalize(latex = TRUE), " ", x, "$")
   } else {
-    beta <- paste0("&beta;", equalize(latex = FALSE), x, sep(latex = latex))
+    beta <- paste0("&beta;", equalize(latex = FALSE), x)
   }
   return(beta)
 }
@@ -83,9 +99,9 @@ parameterize <- function(x, latex = TRUE) {
 # Build standard error
 std_error <- function(x, latex = TRUE) {
   if (latex == TRUE) {
-    error <- paste0("SE", mathesize(equalize()), "$", x, "$", sep())
+    error <- paste0("SE", mathesize(equalize()), "$", x, "$")
   } else {
-    error <- paste0("SE", equalize(latex = latex), x, sep(latex = latex))
+    error <- paste0("SE", equalize(latex = latex), x)
   }
   return(error)
 }
@@ -95,11 +111,10 @@ confidence <- function(lb, ub, latex = TRUE) {
   # Build it
   if (latex == TRUE) {
     interval <- paste0("$", lb, "$, $", ub, "$")
-    ci <- paste0("CI ", mathesize(equalize()), bracketize(interval), sep())
+    ci <- paste0("CI ", mathesize(equalize()), bracketize(interval))
     } else {
     interval <- paste0(lb, ", ", ub)
-    ci <- paste0("CI", equalize(latex = latex), bracketize(interval),
-                 sep(latex = latex))
+    ci <- paste0("CI", equalize(latex = latex), bracketize(interval))
   }
   return(ci)
 }
@@ -108,9 +123,9 @@ confidence <- function(lb, ub, latex = TRUE) {
 statistic <- function(x, latex = TRUE) {
   if (latex == TRUE) {
     stat <- paste0("\\emph{t}", mathesize(equalize(latex = TRUE)), "$",
-                   x, "$", sep())
+                   x, "$")
   } else {
-    stat <- paste0("*t*", equalize(latex = FALSE), x, sep(latex = latex))
+    stat <- paste0("*t*", equalize(latex = FALSE), x)
   }
   return(stat)
 }

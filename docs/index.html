@@ -169,15 +169,27 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lm_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lmer_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a></code></pre></div>
 <p>Ex.<br>
-The intercept differed from 0 (β = 37.29; SE = 1.88; CI = [33.45, 41.12]; <em>t</em> = 19.86; <em>p</em> &lt; .001).</p>
+The intercept differed from 0 (β = 37.29; SE = 1.88; CI = [33.45, 41.12]; <em>t</em> = 19.86; <em>p</em> &lt; .001).</p>
 <p>Ex.<br>
-The intercept differed from 0 (β = 251.41; SE = 9.51; CI = [232.77, 270.04]; <em>t</em> = 26.45; <em>p</em> &lt; .001).</p>
+The intercept differed from 0 (β = 251.41; SE = 9.51; CI = [232.77, 270.04]; <em>t</em> = 26.45; <em>p</em> &lt; .001).</p>
+</div>
+<div id="models-fitted-in-brms" class="section level4">
+<h4 class="hasAnchor">
+<a href="#models-fitted-in-brms" class="anchor"></a>Models fitted in <code>brms</code>
+</h4>
+<p>You can now (v. 0.3) print <code>brms</code> model objects using <code>print_model_param</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(brms)</a>
+<a class="sourceLine" id="cb13-2" title="2">brms_mod &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/brms/topics/brm">brm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<p>Miles per gallon varied as a function of weight (β = −5.35; SE = 0.58; CI = [−6.47, −4.25]).</p>
+<p>…which was written as:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">Miles per gallon varied as a <span class="cf">function</span> of weight </a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">`</span><span class="dt">r print_model_param(brms_mod, "wt", latex = FALSE)</span><span class="st">`</span>.</a></code></pre></div>
 </div>
 <div id="directory-structures" class="section level4">
 <h4 class="hasAnchor">
 <a href="#directory-structures" class="anchor"></a>Directory structures</h4>
 <p>The <code>print_dir_ul</code> function will print the files of a given directory as an unordered list. This function was originally written to improve project management. I typically use it in README files to print the files in the current directory.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a></code></pre></div>
 <pre><code>## - academicWriteR.Rproj 
 ##  - DESCRIPTION 
 ##  - docs 
@@ -185,6 +197,7 @@ The intercept differed from 0 (β = 251.41; SE = 9.51; CI = [232.77, 270
 ##  - man 
 ##  - NAMESPACE 
 ##  - R 
+##  - README_cache 
 ##  - README.md 
 ##  - README.Rmd</code></pre>
 <p>If you set <code>results='asis'</code> in the knitr chunk you will get an unordered list in markdown/HTML.</p>
@@ -199,6 +212,7 @@ print_dir_ul(path = ".")
 <li>man</li>
 <li>NAMESPACE</li>
 <li>R</li>
+<li>README_cache</li>
 <li>README.md</li>
 <li>README.Rmd</li>
 </ul>
@@ -248,7 +262,10 @@ print_dir_ul(path = ".", nested = TRUE, remove = ".md")
 ##     - print_model_params.R 
 ##     - print_nmc_p.R 
 ##     - print_pval.R 
-##     - round_pval.R</code></pre>
+##     - round_pval.R 
+## - README_cache 
+##     - gfm 
+##     - html</code></pre>
 </div>
 </div>
 </div>
@@ -263,10 +280,10 @@ This is a comment
 <p>If you write your comments like this:</p>
 <pre><code>&lt;!-- this is a comment --&gt;</code></pre>
 <p>no words will be counted after this point in the document (I am working on fixing this).</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">This document contains </a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb20-3" title="3">words. </a></code></pre></div>
-<p>This document contains 637 words.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">This document contains </a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb22-3" title="3">words. </a></code></pre></div>
+<p>This document contains 665 words.</p>
 </div>
   </div>
 
