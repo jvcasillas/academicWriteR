@@ -163,6 +163,27 @@ The intercept differed from 0 `r print_model_param(lm_mod1, "(Intercept)", latex
 Ex.  
 The intercept differed from 0 `r print_model_param(lmer_mod1, "(Intercept)", latex = F)`. 
 
+
+#### Models fitted in ```brms```
+
+You can now (v. 0.3) print `brms` model objects using `print_model_param`. 
+
+```{r, brms-ex, cache=TRUE, results='hide', message=F}
+library(brms)
+brms_mod <- brm(mpg ~ wt, data = mtcars)
+```
+
+Miles per gallon varied as a function of weight 
+`r print_model_param(brms_mod, "wt", latex = FALSE)`.
+
+...which was written as: 
+
+```{r, eval=F}
+Miles per gallon varied as a function of weight 
+`r print_model_param(brms_mod, "wt", latex = FALSE)`.
+```
+
+
 #### Directory structures
 
 The `print_dir_ul` function will print the files of a given directory as an 

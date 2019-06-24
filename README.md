@@ -16,6 +16,7 @@ academicWriteR::print_dir_ul(path = "./R")
   - count\_words.R
   - create\_project.R
   - normal\_approximation.R
+  - print\_builder.R
   - print\_dir\_ul.R
   - print\_model\_param.R
   - print\_model\_params\_p.R
@@ -160,12 +161,32 @@ print_model_param(lmer_mod1, "(Intercept)", latex = F)
 ```
 
 Ex.  
-The intercept differed from 0 (β  =  37.29; SE  =  1.88; CI  =  \[33.45,
-41.12\]; *t*  =  19.86; *p* \< .001).
+The intercept differed from 0 (β = 37.29; SE = 1.88; CI = \[33.45,
+41.12\]; *t* = 19.86; *p* \< .001).
 
 Ex.  
-The intercept differed from 0 (β  =  251.41; SE  =  9.51; CI  = 
-\[232.77, 270.04\]; *t*  =  26.45; *p* \< .001).
+The intercept differed from 0 (β = 251.41; SE = 9.51; CI = \[232.77,
+270.04\]; *t* = 26.45; *p* \< .001).
+
+#### Models fitted in `brms`
+
+You can now (v. 0.3) print `brms` model objects using
+`print_model_param`.
+
+``` r
+library(brms)
+brms_mod <- brm(mpg ~ wt, data = mtcars)
+```
+
+Miles per gallon varied as a function of weight (β = −5.35; SE = 0.59;
+CI = \[−6.51, −4.18\]).
+
+…which was written as:
+
+``` r
+Miles per gallon varied as a function of weight 
+`r print_model_param(brms_mod, "wt", latex = FALSE)`.
+```
 
 #### Directory structures
 
@@ -185,6 +206,7 @@ print_dir_ul(path = ".")
     ##  - man 
     ##  - NAMESPACE 
     ##  - R 
+    ##  - README_cache 
     ##  - README.md 
     ##  - README.Rmd
 
@@ -202,6 +224,7 @@ list in markdown/HTML.
   - man
   - NAMESPACE
   - R
+  - README\_cache
   - README.md
   - README.Rmd
 
@@ -234,6 +257,7 @@ and the files nested within any subdirectories. Additionally, the
     ##     - count_words.Rd 
     ##     - create_project.Rd 
     ##     - normal_approximation.Rd 
+    ##     - print_builder.Rd 
     ##     - print_dir_ul.Rd 
     ##     - print_model_param.Rd 
     ##     - print_model_params_p.Rd 
@@ -247,13 +271,16 @@ and the files nested within any subdirectories. Additionally, the
     ##     - count_words.R 
     ##     - create_project.R 
     ##     - normal_approximation.R 
+    ##     - print_builder.R 
     ##     - print_dir_ul.R 
     ##     - print_model_param.R 
     ##     - print_model_params_p.R 
     ##     - print_model_params.R 
     ##     - print_nmc_p.R 
     ##     - print_pval.R 
-    ##     - round_pval.R
+    ##     - round_pval.R 
+    ## - README_cache 
+    ##     - gfm
 
 ## Word count
 
@@ -288,4 +315,4 @@ This document contains
 words. 
 ```
 
-This document contains 637 words.
+This document contains 665 words.
