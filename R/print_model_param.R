@@ -23,14 +23,22 @@ print_model_param <- function(model, parameter, latex = TRUE) {
 
 print_model_param.default <- function(model, parameter, latex = TRUE){
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
+  if (is.null(doc_type)) {
+    use_latex <- latex
+  } else {
+    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+  }
+
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_if(., is.numeric, round, digits = 2)
+    mutate_each(., give_n_digits, -term, -p.value)
 
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
 
-  line <- print_builder(mod_out, latex = latex)
+  line <- print_builder(mod_out, latex = use_latex)
 
   return(line)
 }
@@ -45,18 +53,26 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
 print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
+  if (is.null(doc_type)) {
+    use_latex <- latex
+  } else {
+    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+  }
+
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_if(., is.numeric, round, digits = 2)
+    mutate_each(., give_n_digits, -term)
 
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
 
   if(!("p.value" %in% colnames(mod_out))) {
-    mod_out$p.value <- normal_approximation(mod_out$statistic)
+    mod_out$p.value <- normal_approximation(as.numeric(mod_out$statistic))
   }
 
-  line <- print_builder(mod_out, latex = latex)
+  line <- print_builder(mod_out, latex = use_latex)
 
   return(line)
 }
@@ -67,15 +83,22 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
 print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
+  if (is.null(doc_type)) {
+    use_latex <- latex
+  } else {
+    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+  }
+
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_if(., is.numeric, round, digits = 2)
+    mutate_each(., give_n_digits, -term)
 
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
 
-  line <- print_builder.brmsfit(mod_out, latex = latex)
+  line <- print_builder.brmsfit(mod_out, latex = use_latex)
 
   return(line)
 }
-
