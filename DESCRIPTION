@@ -14,6 +14,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
     lme4, broom, lmerTest, broom.mixed, readr, tibble, tidytext, dplyr, rlang, 
-    stats, knitr
+    stats, knitr, flextable, officer, forcats
 LazyData: true
 RoxygenNote: 6.1.1

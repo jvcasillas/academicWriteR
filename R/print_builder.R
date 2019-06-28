@@ -51,7 +51,7 @@ print_builder.brmsfit <- function(model, latex = TRUE) {
 
 
 
-
+#' @export
 # Put parenthesis around something
 parenthesize <- function(x) {
   l_side <- "("
@@ -60,6 +60,7 @@ parenthesize <- function(x) {
   return(out)
 }
 
+#' @export
 # Put brackets around something
 bracketize <- function(x) {
   l_side <- "["
