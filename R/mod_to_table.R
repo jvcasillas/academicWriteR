@@ -22,20 +22,6 @@ mod_to_table <- function(
 }
 
 
-# Adjust parameter names
-parameter_adj <- function(mod, param_names = NULL) {
-
-  if (!is.null(param_names)) {
-    mod$term <- fct_recode(mod$term, !!!param_names)
-  return(mod$term)
-  } else {
-  return(mod$term)
-  }
-
-}
-
-
-
 #' @export
 # Default for lm/glm
 mod_to_table.default <- function(
@@ -48,52 +34,14 @@ mod_to_table.default <- function(
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
-  if(!("p.value" %in% colnames(mod))) {
-    mod$p.value <- normal_approximation(as.numeric(mod$statistic))
-  }
-
-  # Adjust terms
+  # Table adjustments
+  add_p(mod)
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
+  set_col_widths <- column_widths(width = width, col = col)
+  rename_cols <- set_col_names(model)
+  standard_flex <- set_flex(model)
 
-  # Set col widths (default to 1)
-  if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
-    } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
-    } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
-  }
-
-  # Add standard column names
-  rename_cols <- . %>%
-    select(
-      Parameter = term,
-      Estimate = estimate,
-      SE = std.error,
-      `CI low` = conf.low,
-      `CI high` = conf.high,
-      t = statistic,
-      p = p.value)
-
-  # Format the pvalues and remove fluff
-  format_p <- . %>%
-    mutate(p.value = print_pval(p.value, latex = F)) %>%
-    mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
-    mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
-
-  # Strandard flextable with unchanging params
-  standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
-              border.top = officer::fp_border(width = 0.95),
-              border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
-                            border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all") %>%
-    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
-
+  # Print table
   mod %>%
     mutate_each(give_n_digits, -term, -p.value) %>%
     format_p %>%
@@ -105,21 +53,6 @@ mod_to_table.default <- function(
     set_col_widths
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #' @export
@@ -141,52 +74,14 @@ mod_to_table.lmerMod <- function(
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
-  if(!("p.value" %in% colnames(mod))) {
-    mod$p.value <- normal_approximation(as.numeric(mod$statistic))
-  }
-
-  # Adjust terms
+  # Table adjustments
+  add_p(mod)
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
+  set_col_widths <- column_widths(width = width, col = col)
+  rename_cols <- set_col_names(model)
+  standard_flex <- set_flex(model)
 
-  # Set col widths (default to 1)
-  if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
-    } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
-    } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
-  }
-
-  # Add standard column names
-  rename_cols <- . %>%
-    select(
-      Parameter = term,
-      Estimate = estimate,
-      SE = std.error,
-      `CI low` = conf.low,
-      `CI high` = conf.high,
-      t = statistic,
-      p = p.value)
-
-  # Format the pvalues and remove fluff
-  format_p <- . %>%
-    mutate(p.value = print_pval(p.value, latex = F)) %>%
-    mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
-    mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
-
-  # Strandard flextable with unchanging params
-  standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
-              border.top = officer::fp_border(width = 0.95),
-              border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
-                            border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all") %>%
-    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
-
+  # Print table
   mod %>%
   mutate_each(give_n_digits, -term, -p.value) %>%
     format_p %>%
@@ -198,10 +93,6 @@ mod_to_table.lmerMod <- function(
     set_col_widths
 
 }
-
-
-
-
 
 
 #' @export
@@ -219,48 +110,11 @@ mod_to_table.lmerModLmerTest <- function(
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
-  # Adjust terms
+  # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
-
-  # Set col widths (default to 1)
-  if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
-    } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
-    } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
-  }
-
-  # Add standard column names
-  rename_cols <- . %>%
-    select(
-      Parameter = term,
-      Estimate = estimate,
-      SE = std.error,
-      `CI low` = conf.low,
-      `CI high` = conf.high,
-      t = statistic,
-      df,
-      p = p.value)
-
-  # Format the pvalues and remove fluff
-  format_p <- . %>%
-    mutate(p.value = print_pval(p.value, latex = F)) %>%
-    mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
-    mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
-
-  # Strandard flextable with unchanging params
-  standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
-              border.top = officer::fp_border(width = 0.95),
-              border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
-                            border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all") %>%
-    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
+  set_col_widths <- column_widths(width = width, col = col)
+  rename_cols <- set_col_names(model)
+  standard_flex <- set_flex(model)
 
   mod %>%
   mutate_each(give_n_digits, -term, -p.value) %>%
@@ -273,11 +127,6 @@ mod_to_table.lmerModLmerTest <- function(
     set_col_widths
 
 }
-
-
-
-
-
 
 
 #' @export
@@ -300,48 +149,13 @@ mod_to_table.glmerMod <- function(
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
-  # Adjust terms
+  # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
+  set_col_widths <- column_widths(width = width, col = col)
+  rename_cols <- set_col_names(model)
+  standard_flex <- set_flex(model)
 
-  # Set col widths (default to 1)
-  if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
-    } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
-    } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
-  }
-
-  # Add standard column names
-  rename_cols <- . %>%
-    select(
-      Parameter = term,
-      Estimate = estimate,
-      SE = std.error,
-      `CI low` = conf.low,
-      `CI high` = conf.high,
-      t = statistic,
-      p = p.value)
-
-  # Format the pvalues and remove fluff
-  format_p <- . %>%
-    mutate(p.value = print_pval(p.value, latex = F)) %>%
-    mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
-    mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
-
-  # Strandard flextable with unchanging params
-  standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
-              border.top = officer::fp_border(width = 0.95),
-              border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
-                            border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all") %>%
-    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
-
+  # Print table
   mod %>%
   mutate_each(give_n_digits, -term, -p.value) %>%
     format_p %>%
@@ -353,16 +167,6 @@ mod_to_table.glmerMod <- function(
     set_col_widths
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 #' @export
@@ -380,39 +184,13 @@ mod_to_table.brmsfit <- function(
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
-  # Adjust terms
+  # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
+  set_col_widths <- column_widths(width = width, col = col)
+  rename_cols <- set_col_names(model)
+  standard_flex <- set_flex(model)
 
-  # Set col widths (default to 1)
-  if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
-    } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
-    } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
-  }
-
-  # Add standard column names
-  rename_cols <- . %>%
-    select(
-      Parameter = term,
-      Estimate = estimate,
-      SE = std.error,
-      `2.5%` = conf.low,
-      `97.5%` = conf.high)
-
-  # Strandard flextable with unchanging params
-  standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
-              border.top = officer::fp_border(width = 0.95),
-              border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
-                            border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all")
-
+  # Print table
   mod %>%
   mutate_each(give_n_digits, -term) %>%
     rename_cols %>%
@@ -426,3 +204,102 @@ mod_to_table.brmsfit <- function(
 
 
 
+
+
+
+# Helpers ---------------------------------------------------------------------
+#
+#' @export
+# Add standard column names
+set_col_names <- function(model) {
+  if (class(model) %in% c("lmerModLmerTest")) {
+    rename_cols <- . %>%
+      select(Parameter = term, Estimate = estimate, SE = std.error,
+             `CI low` = conf.low, `CI high` = conf.high, t = statistic, df,
+             p = p.value)
+  } else if (class(model) == "brmsfit") {
+    rename_cols <- . %>%
+      select(Parameter = term, Estimate = estimate, SE = std.error,
+             `2.5%` = conf.low, `97.5%` = conf.high)
+  } else {
+    rename_cols <- . %>%
+      select(Parameter = term, Estimate = estimate, SE = std.error,
+             `CI low` = conf.low, `CI high` = conf.high, t = statistic,
+             p = p.value)
+  }
+}
+
+
+#' @export
+# Adjust parameter names
+parameter_adj <- function(mod, param_names = NULL) {
+
+  if (!is.null(param_names)) {
+    mod$term <- fct_recode(mod$term, !!!param_names)
+  return(mod$term)
+  } else {
+  return(mod$term)
+  }
+
+}
+
+
+#' @export
+# Standard flextable format
+set_flex <- function(model) {
+  if (class(model) == "brmsfit") {
+    standard_flex <- . %>%
+    flextable::flextable() %>%
+    flextable::font(., fontname = "Times", part = "all") %>%
+    flextable::border_remove(.) %>%
+    flextable::border(., part = "header",
+              border.top = officer::fp_border(width = 0.95),
+              border.bottom = officer::fp_border(width = 0.75)) %>%
+    flextable::hline_bottom(., part = "body",
+                            border = officer::fp_border(width = 0.95)) %>%
+    flextable::padding(., padding = 0, part = "all")
+  } else {
+    standard_flex <- . %>%
+    flextable::flextable() %>%
+    flextable::font(., fontname = "Times", part = "all") %>%
+    flextable::border_remove(.) %>%
+    flextable::border(., part = "header",
+              border.top = officer::fp_border(width = 0.95),
+              border.bottom = officer::fp_border(width = 0.75)) %>%
+    flextable::hline_bottom(., part = "body",
+                            border = officer::fp_border(width = 0.95)) %>%
+    flextable::padding(., padding = 0, part = "all") %>%
+    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
+  }
+}
+
+
+#' @export
+# Add pvalue if missing
+add_p <- function(mod) {
+  if(!("p.value" %in% colnames(mod))) {
+    mod$p.value <- normal_approximation(as.numeric(mod$statistic))
+  }
+}
+
+
+#' @export
+# Format the pvalues and remove fluff
+format_p <- . %>%
+  mutate(p.value = print_pval(p.value, latex = F)) %>%
+  mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
+  mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
+
+
+#' @export
+# Determine columns widths
+column_widths <- function(width = NULL, col = NULL) {
+  # Set col widths (default to 1)
+  if (is.null(width)) {
+    set_col_widths <- . %>% flextable::width(., width = 1)
+    } else if (is.numeric(width & is.null(col))) {
+    set_col_widths <- . %>% flextable::width(., width = width)
+    } else {
+    set_col_widths <- . %>% flextable::width(., j = col, width = width)
+  }
+}
