@@ -28,6 +28,8 @@ mod_to_table.default <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE))
 
@@ -39,9 +41,11 @@ mod_to_table.default <- function(
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
   rename_cols <- set_col_names(model)
+
+  if (doc_type == "docx") {
+
   standard_flex <- set_flex(model)
 
-  # Print table
   mod %>%
     mutate_each(give_n_digits, -term, -p.value) %>%
     format_p %>%
@@ -51,6 +55,18 @@ mod_to_table.default <- function(
     flextable::align(align = "left", j = left_align, part = "all") %>%
     flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
     set_col_widths
+  } else {
+    mod %>%
+      mutate_each(give_n_digits, -term, -p.value) %>%
+      format_p %>%
+      rename_cols %>%
+      kable(., format = "latex", booktabs = T, escape = F,
+           #caption = 'Posterior parameter estimates for voiced stops.',
+           #align = c("l", "r", "r", "r", "r", "r", "r")
+           ) %>%
+      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+
+  }
 
 }
 
@@ -66,6 +82,8 @@ mod_to_table.lmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
     filter(group == "fixed") %>%
@@ -79,6 +97,9 @@ mod_to_table.lmerMod <- function(
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
   rename_cols <- set_col_names(model)
+
+  if (doc_type == "docx") {
+
   standard_flex <- set_flex(model)
 
   # Print table
@@ -91,7 +112,18 @@ mod_to_table.lmerMod <- function(
     flextable::align(align = "left", j = left_align, part = "all") %>%
     flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
     set_col_widths
+  } else {
+    mod %>%
+      mutate_each(give_n_digits, -term, -p.value) %>%
+      format_p %>%
+      rename_cols %>%
+      kable(., format = "latex", booktabs = T, escape = F,
+           #caption = 'Posterior parameter estimates for voiced stops.',
+           #align = c("l", "r", "r", "r", "r", "r", "r")
+           ) %>%
+      kable_styling(font_size = font_size, latex_options = c("hold_position"))
 
+  }
 }
 
 
@@ -101,6 +133,8 @@ mod_to_table.lmerMod <- function(
 mod_to_table.lmerModLmerTest <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
+
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -114,6 +148,9 @@ mod_to_table.lmerModLmerTest <- function(
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
   rename_cols <- set_col_names(model)
+
+  if (doc_type == "docx") {
+
   standard_flex <- set_flex(model)
 
   mod %>%
@@ -125,7 +162,18 @@ mod_to_table.lmerModLmerTest <- function(
     flextable::align(align = "left", j = left_align, part = "all") %>%
     flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
     set_col_widths
+  } else {
+    mod %>%
+      mutate_each(give_n_digits, -term, -p.value) %>%
+      format_p %>%
+      rename_cols %>%
+      kable(., format = "latex", booktabs = T, escape = F,
+           #caption = 'Posterior parameter estimates for voiced stops.',
+           #align = c("l", "r", "r", "r", "r", "r", "r")
+           ) %>%
+      kable_styling(font_size = font_size, latex_options = c("hold_position"))
 
+  }
 }
 
 
@@ -141,6 +189,8 @@ mod_to_table.glmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
     filter(effect == "fixed") %>%
@@ -153,6 +203,9 @@ mod_to_table.glmerMod <- function(
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
   rename_cols <- set_col_names(model)
+
+  if (doc_type == "docx") {
+
   standard_flex <- set_flex(model)
 
   # Print table
@@ -165,7 +218,18 @@ mod_to_table.glmerMod <- function(
     flextable::align(align = "left", j = left_align, part = "all") %>%
     flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
     set_col_widths
+  } else {
+    mod %>%
+      mutate_each(give_n_digits, -term, -p.value) %>%
+      format_p %>%
+      rename_cols %>%
+      kable(., format = "latex", booktabs = T, escape = F,
+           #caption = 'Posterior parameter estimates for voiced stops.',
+           #align = c("l", "r", "r", "r", "r", "r", "r")
+           ) %>%
+      kable_styling(font_size = font_size, latex_options = c("hold_position"))
 
+  }
 }
 
 
@@ -175,6 +239,8 @@ mod_to_table.glmerMod <- function(
 mod_to_table.brmsfit <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
+
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -188,18 +254,31 @@ mod_to_table.brmsfit <- function(
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
   rename_cols <- set_col_names(model)
-  standard_flex <- set_flex(model)
 
-  # Print table
-  mod %>%
-  mutate_each(give_n_digits, -term) %>%
-    rename_cols %>%
-    standard_flex %>%
-    flextable::fontsize(size = font_size, part = "all") %>%
-    flextable::align(align = "left", j = left_align, part = "all") %>%
-    flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
-    set_col_widths
+  if (doc_type == "docx") {
 
+    standard_flex <- set_flex(model)
+
+    # Print table
+    mod %>%
+    mutate_each(give_n_digits, -term) %>%
+      rename_cols %>%
+      standard_flex %>%
+      flextable::fontsize(size = font_size, part = "all") %>%
+      flextable::align(align = "left", j = left_align, part = "all") %>%
+      flextable::align(align = "right", j = n_cols[-left_align], part = "all") %>%
+      set_col_widths
+  } else {
+    mod %>%
+      mutate_each(give_n_digits, -term) %>%
+      rename_cols %>%
+      kable(., format = "latex", booktabs = T, escape = T,
+           #caption = 'Posterior parameter estimates for voiced stops.',
+           #align = c("l", "r", "r", "r", "r", "r", "r")
+           ) %>%
+      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+
+  }
 }
 
 
@@ -212,12 +291,12 @@ mod_to_table.brmsfit <- function(
 #' @export
 # Add standard column names
 set_col_names <- function(model) {
-  if (class(model) %in% c("lmerModLmerTest")) {
+  if (class(model)[1] %in% c("lmerModLmerTest")) {
     rename_cols <- . %>%
       select(Parameter = term, Estimate = estimate, SE = std.error,
              `CI low` = conf.low, `CI high` = conf.high, t = statistic, df,
              p = p.value)
-  } else if (class(model) == "brmsfit") {
+  } else if (class(model)[1] == "brmsfit") {
     rename_cols <- . %>%
       select(Parameter = term, Estimate = estimate, SE = std.error,
              `2.5%` = conf.low, `97.5%` = conf.high)
