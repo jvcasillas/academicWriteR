@@ -14,8 +14,5 @@ print_builder(model, latex = TRUE)
 \description{
 A series of helper functions for printing model parameters
 }
-\examples{
-
-}
 \keyword{Report}
 \keyword{model}

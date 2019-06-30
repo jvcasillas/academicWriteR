@@ -24,9 +24,8 @@ mod_to_table(model, param_names = NULL, font_size = 11,
 This function takes a model object generates a table
 }
 \examples{
-library(dplyr)
-mod1 <- lm(mpg ~ drat, data = mtcars)
-mod_to_table(mod1)
+mod <- lm(mpg ~ drat, data = mtcars)
+mod_to_table(mod)
 }
 \keyword{Report}
 \keyword{model}
