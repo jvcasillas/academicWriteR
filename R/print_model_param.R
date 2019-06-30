@@ -7,6 +7,7 @@
 #' @param parameter A model parameter
 #' @param latex Determine if output is LaTeX or markdown
 #' @keywords Report model
+#' @imort dplyr
 #' @export
 #' @examples
 
@@ -16,20 +17,13 @@ print_model_param <- function(model, parameter, latex = TRUE) {
 
 #' @export
 #' @examples
-#' library(dplyr)
 #' mod1 <- lm(mpg ~ wt, data = mtcars)
 #' print_model_param(mod1, "wt")
 #' print_model_param(mod1, "wt", latex = FALSE)
 
 print_model_param.default <- function(model, parameter, latex = TRUE){
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-
-  if (is.null(doc_type)) {
-    use_latex <- latex
-  } else {
-    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
-  }
+  use_latex <- determine_latex()
 
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -53,13 +47,7 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
 print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-
-  if (is.null(doc_type)) {
-    use_latex <- latex
-  } else {
-    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
-  }
+  use_latex <- determine_latex()
 
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -83,13 +71,7 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
 print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-
-  if (is.null(doc_type)) {
-    use_latex <- latex
-  } else {
-    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
-  }
+  use_latex <- determine_latex()
 
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -101,4 +83,15 @@ print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
   line <- print_builder.brmsfit(mod_out, latex = use_latex)
 
   return(line)
+}
+
+
+# Helper for determining how to set `latex` argument
+determine_latex <- function() {
+  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  if (is.null(doc_type)) {
+    use_latex <- latex
+  } else {
+    use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+  }
 }
