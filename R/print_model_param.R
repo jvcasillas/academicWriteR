@@ -7,7 +7,7 @@
 #' @param parameter A model parameter
 #' @param latex Determine if output is LaTeX or markdown
 #' @keywords Report model
-#' @imort dplyr
+#' @import dplyr
 #' @export
 #' @examples
 
@@ -39,6 +39,7 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
 
 #' @export
+#' @import broom.mixed
 #' @examples
 #' library(lme4)
 #' library(dplyr)

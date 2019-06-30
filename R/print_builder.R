@@ -5,6 +5,7 @@
 #' @param model a model object
 #' @param latex Output is LaTeX or markdown
 #' @keywords Report model
+#' @import dplyr
 #' @export
 
 print_builder <- function(model, latex = TRUE) {
