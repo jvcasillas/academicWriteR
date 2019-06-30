@@ -9,11 +9,11 @@
 #' @param width The width in inches of the columns
 #' @param col The number of a specific column for width adjustments
 #' @keywords Report model
+#' @import dplyr
 #' @export
 #' @examples
-#' library(dplyr)
-#' mod1 <- lm(mpg ~ drat, data = mtcars)
-#' mod_to_table(mod1)
+#' mod <- lm(mpg ~ drat, data = mtcars)
+#' mod_to_table(mod)
 
 mod_to_table <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
@@ -28,7 +28,7 @@ mod_to_table.default <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  doc_type <- set_doc_type()
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE))
@@ -60,11 +60,12 @@ mod_to_table.default <- function(
       mutate_each(give_n_digits, -term, -p.value) %>%
       format_p %>%
       rename_cols %>%
-      kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            #align = c("l", "r", "r", "r", "r", "r", "r")
            ) %>%
-      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+      kableExtra::kable_styling(font_size = font_size,
+                                latex_options = c("hold_position"))
 
   }
 
@@ -73,8 +74,6 @@ mod_to_table.default <- function(
 
 #' @export
 #' @examples
-#' library(lme4)
-#' library(dplyr)
 #' mod1a <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
 #' mod_to_table(mod1a)
 
@@ -82,7 +81,7 @@ mod_to_table.lmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  doc_type <- set_doc_type()
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -117,11 +116,12 @@ mod_to_table.lmerMod <- function(
       mutate_each(give_n_digits, -term, -p.value) %>%
       format_p %>%
       rename_cols %>%
-      kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            #align = c("l", "r", "r", "r", "r", "r", "r")
            ) %>%
-      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+      kableExtra::kable_styling(font_size = font_size,
+                                latex_options = c("hold_position"))
 
   }
 }
@@ -134,7 +134,7 @@ mod_to_table.lmerModLmerTest <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  doc_type <- set_doc_type()
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -167,11 +167,12 @@ mod_to_table.lmerModLmerTest <- function(
       mutate_each(give_n_digits, -term, -p.value) %>%
       format_p %>%
       rename_cols %>%
-      kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            #align = c("l", "r", "r", "r", "r", "r", "r")
            ) %>%
-      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+      kableExtra::kable_styling(font_size = font_size,
+                                latex_options = c("hold_position"))
 
   }
 }
@@ -179,8 +180,6 @@ mod_to_table.lmerModLmerTest <- function(
 
 #' @export
 #' @examples
-#' library(lme4)
-#' library(dplyr)
 #' mod4 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
 #'               data = cbpp, family = binomial)
 #' mod_to_table(mod4)
@@ -189,7 +188,7 @@ mod_to_table.glmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  doc_type <- set_doc_type()
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -223,11 +222,12 @@ mod_to_table.glmerMod <- function(
       mutate_each(give_n_digits, -term, -p.value) %>%
       format_p %>%
       rename_cols %>%
-      kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            #align = c("l", "r", "r", "r", "r", "r", "r")
            ) %>%
-      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+      kableExtra::kable_styling(font_size = font_size,
+                                latex_options = c("hold_position"))
 
   }
 }
@@ -240,7 +240,7 @@ mod_to_table.brmsfit <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL) {
 
-  doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  doc_type <- set_doc_type()
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
@@ -272,11 +272,12 @@ mod_to_table.brmsfit <- function(
     mod %>%
       mutate_each(give_n_digits, -term) %>%
       rename_cols %>%
-      kable(., format = "latex", booktabs = T, escape = T,
+      knitr::kable(., format = "latex", booktabs = T, escape = T,
            #caption = 'Posterior parameter estimates for voiced stops.',
            #align = c("l", "r", "r", "r", "r", "r", "r")
            ) %>%
-      kable_styling(font_size = font_size, latex_options = c("hold_position"))
+      kableExtra::kable_styling(font_size = font_size,
+                                latex_options = c("hold_position"))
 
   }
 }
@@ -287,8 +288,6 @@ mod_to_table.brmsfit <- function(
 
 
 # Helpers ---------------------------------------------------------------------
-#
-#' @export
 # Add standard column names
 set_col_names <- function(model) {
   if (class(model)[1] %in% c("lmerModLmerTest")) {
@@ -309,12 +308,11 @@ set_col_names <- function(model) {
 }
 
 
-#' @export
 # Adjust parameter names
 parameter_adj <- function(mod, param_names = NULL) {
 
   if (!is.null(param_names)) {
-    mod$term <- fct_recode(mod$term, !!!param_names)
+    mod$term <- forcats::fct_recode(mod$term, !!!param_names)
   return(mod$term)
   } else {
   return(mod$term)
@@ -323,7 +321,6 @@ parameter_adj <- function(mod, param_names = NULL) {
 }
 
 
-#' @export
 # Standard flextable format
 set_flex <- function(model) {
   if (class(model) == "brmsfit") {
@@ -353,7 +350,6 @@ set_flex <- function(model) {
 }
 
 
-#' @export
 # Add pvalue if missing
 add_p <- function(mod) {
   if(!("p.value" %in% colnames(mod))) {
@@ -362,7 +358,6 @@ add_p <- function(mod) {
 }
 
 
-#' @export
 # Format the pvalues and remove fluff
 format_p <- . %>%
   mutate(p.value = print_pval(p.value, latex = F)) %>%
@@ -370,7 +365,6 @@ format_p <- . %>%
   mutate(p.value = gsub("*p* ", "", fixed = T, paste(.$p.value)))
 
 
-#' @export
 # Determine columns widths
 column_widths <- function(width = NULL, col = NULL) {
   # Set col widths (default to 1)
@@ -381,4 +375,13 @@ column_widths <- function(width = NULL, col = NULL) {
     } else {
     set_col_widths <- . %>% flextable::width(., j = col, width = width)
   }
+}
+
+# Get document type/set default
+set_doc_type <- function() {
+  this_doc <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  if (is.null(this_doc)) {
+    this_doc <- "latex"
+  }
+  return(this_doc)
 }
