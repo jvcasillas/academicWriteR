@@ -11,5 +11,6 @@
 #' normal_approximation(2.02)
 
 normal_approximation <- function(statistic) {
-  2 * (1 - pnorm(abs(statistic)))
+  2 * (1 - stats::pnorm(abs(statistic)))
 }
+

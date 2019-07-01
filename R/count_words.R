@@ -21,7 +21,7 @@ count_words <- function(file) {
     remove_inline_code(.) %>%
     remove_html_comment(.) %>%
     tidytext::unnest_tokens(., output = .data$words, input = value) %>%
-    nrow()
+    nrow(.)
   return(wc)
 }
 
@@ -72,5 +72,4 @@ remove_html_comment <- function(x) {
     select(-.data$start_comment, -.data$end_comment, -.data$remove)
 }
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+utils::globalVariables(c(".", "value"))

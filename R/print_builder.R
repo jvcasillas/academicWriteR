@@ -6,6 +6,7 @@
 #' @param latex Output is LaTeX or markdown
 #' @keywords Report model
 #' @import dplyr
+#' @importFrom rlang .data
 #' @export
 
 print_builder <- function(model, latex = TRUE) {
@@ -50,14 +51,12 @@ print_builder.brmsfit <- function(model, latex = TRUE) {
 
 
 
-#' @export
 # Put parenthesis around something
 parenthesize <- function(x) {
   out <- paste0("(", x, ")")
   return(out)
 }
 
-#' @export
 # Put brackets around something
 bracketize <- function(x) {
   out <- paste0("[", x, "]")

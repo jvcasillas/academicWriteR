@@ -96,3 +96,5 @@ determine_latex <- function() {
     use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
   }
 }
+
+utils::globalVariables(c("latex", "term"))

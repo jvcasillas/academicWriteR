@@ -62,7 +62,7 @@ mod_to_table.default <- function(
       rename_cols %>%
       knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
-           #align = c("l", "r", "r", "r", "r", "r", "r")
+           align = c("l", rep("r", length(n_cols)))
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
@@ -118,7 +118,7 @@ mod_to_table.lmerMod <- function(
       rename_cols %>%
       knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
-           #align = c("l", "r", "r", "r", "r", "r", "r")
+           align = c("l", rep("r", length(n_cols)))
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
@@ -169,7 +169,7 @@ mod_to_table.lmerModLmerTest <- function(
       rename_cols %>%
       knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
-           #align = c("l", "r", "r", "r", "r", "r", "r")
+           align = c("l", rep("r", length(n_cols)))
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
@@ -224,7 +224,7 @@ mod_to_table.glmerMod <- function(
       rename_cols %>%
       knitr::kable(., format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
-           #align = c("l", "r", "r", "r", "r", "r", "r")
+           align = c("l", rep("r", length(n_cols)))
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
@@ -274,7 +274,7 @@ mod_to_table.brmsfit <- function(
       rename_cols %>%
       knitr::kable(., format = "latex", booktabs = T, escape = T,
            #caption = 'Posterior parameter estimates for voiced stops.',
-           #align = c("l", "r", "r", "r", "r", "r", "r")
+           align = c("l", rep("r", length(n_cols)))
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
@@ -385,3 +385,8 @@ set_doc_type <- function() {
   }
   return(this_doc)
 }
+
+
+utils::globalVariables(
+  c("effect", "component", "group", "p.value", "estimate", "std.error", "df",
+    "conf.low", "conf.high"))
