@@ -40,7 +40,7 @@ mod_to_table.default <- function(
   add_p(mod)
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
-  rename_cols <- set_col_names(model)
+  rename_cols <- set_col_names(model = model, doc_type = doc_type)
 
   if (doc_type == "docx") {
 
@@ -95,7 +95,7 @@ mod_to_table.lmerMod <- function(
   add_p(mod)
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
-  rename_cols <- set_col_names(model)
+  rename_cols <- set_col_names(model = model, doc_type = doc_type)
 
   if (doc_type == "docx") {
 
@@ -147,7 +147,7 @@ mod_to_table.lmerModLmerTest <- function(
   # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
-  rename_cols <- set_col_names(model)
+  rename_cols <- set_col_names(model = model, doc_type = doc_type)
 
   if (doc_type == "docx") {
 
@@ -201,7 +201,7 @@ mod_to_table.glmerMod <- function(
   # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
-  rename_cols <- set_col_names(model)
+  rename_cols <- set_col_names(model = model, doc_type = doc_type)
 
   if (doc_type == "docx") {
 
@@ -253,7 +253,7 @@ mod_to_table.brmsfit <- function(
   # Table adjustments
   mod$term <- parameter_adj(mod = mod, param_names = param_names)
   set_col_widths <- column_widths(width = width, col = col)
-  rename_cols <- set_col_names(model)
+  rename_cols <- set_col_names(model = model, doc_type = doc_type)
 
   if (doc_type == "docx") {
 
@@ -289,21 +289,39 @@ mod_to_table.brmsfit <- function(
 
 # Helpers ---------------------------------------------------------------------
 # Add standard column names
-set_col_names <- function(model) {
-  if (class(model)[1] %in% c("lmerModLmerTest")) {
-    rename_cols <- . %>%
-      select(Parameter = term, Estimate = estimate, SE = std.error,
-             `CI low` = conf.low, `CI high` = conf.high, t = statistic, df,
-             p = p.value)
-  } else if (class(model)[1] == "brmsfit") {
-    rename_cols <- . %>%
-      select(Parameter = term, Estimate = estimate, SE = std.error,
-             `2.5%` = conf.low, `97.5%` = conf.high)
+set_col_names <- function(model, doc_type = doc_type) {
+  if (doc_type == "docx") {
+    if (class(model)[1] %in% c("lmerModLmerTest")) {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `CI low` = conf.low, `CI high` = conf.high, t = statistic, df,
+               p = p.value)
+    } else if (class(model)[1] == "brmsfit") {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `2.5%` = conf.low, `97.5%` = conf.high)
+    } else {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `CI low` = conf.low, `CI high` = conf.high, t = statistic,
+               p = p.value)
+    }
   } else {
-    rename_cols <- . %>%
-      select(Parameter = term, Estimate = estimate, SE = std.error,
-             `CI low` = conf.low, `CI high` = conf.high, t = statistic,
-             p = p.value)
+    if (class(model)[1] %in% c("lmerModLmerTest")) {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `CI low` = conf.low, `CI high` = conf.high,
+               `\\emph{t}` = statistic, df, `\\emph{p}` = p.value)
+    } else if (class(model)[1] == "brmsfit") {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `2.5%` = conf.low, `97.5%` = conf.high)
+    } else {
+      rename_cols <- . %>%
+        select(Parameter = term, Estimate = estimate, SE = std.error,
+               `CI low` = conf.low, `CI high` = conf.high,
+               `\\emph{t}` = statistic, `\\emph{p}` = p.value)
+    }
   }
 }
 
@@ -389,4 +407,4 @@ set_doc_type <- function() {
 
 utils::globalVariables(
   c("effect", "component", "group", "p.value", "estimate", "std.error", "df",
-    "conf.low", "conf.high"))
+    "conf.low", "conf.high", "doc_type"))
