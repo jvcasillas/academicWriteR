@@ -66,7 +66,6 @@ mod_to_table.default <- function(
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
                                 latex_options = c("hold_position"))
-
   }
 
 }
@@ -247,6 +246,17 @@ mod_to_table.brmsfit <- function(
     filter(effect == "fixed") %>%
     select(-effect, -component, -group)
 
+  # calc prob that given beta is > 0
+  p_beta <- posterior_samples(model) %>%
+    select(starts_with("b_")) %>%
+    rename(`(Intercept)` = b_Intercept) %>%
+    tidyr::gather(term, estimate) %>%
+    group_by(term) %>%
+    summarize(`p(β > 0)` = prop_calc(estimate)) %>%
+    mutate(term = gsub("b_", "", fixed = T, paste(.$term)))
+
+  mod <- left_join(mod, p_beta, by = "term")
+
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
 
@@ -299,7 +309,7 @@ set_col_names <- function(model, doc_type = doc_type) {
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high)
+               `2.5%` = conf.low, `97.5%` = conf.high, `p(β > 0)`)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -315,7 +325,8 @@ set_col_names <- function(model, doc_type = doc_type) {
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high)
+               `2.5%` = conf.low, `97.5%` = conf.high,
+               `p(B != 0)` = `p(β > 0)`)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -403,6 +414,18 @@ set_doc_type <- function() {
   }
   return(this_doc)
 }
+
+# For calculating posterior prob that beta is >< than 0
+prop_calc <- function(x) {
+  check <- mean(x)
+
+  if (check < 0 ) {
+    return(mean(x < 0))
+  } else {
+    return(mean(x > 0))
+  }
+}
+
 
 
 utils::globalVariables(
