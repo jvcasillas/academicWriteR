@@ -252,7 +252,7 @@ mod_to_table.brmsfit <- function(
     rename(`(Intercept)` = b_Intercept) %>%
     tidyr::gather(term, estimate) %>%
     group_by(term) %>%
-    summarize(`p(β > 0)` = prop_calc(estimate)) %>%
+    summarize(MPE = bayestestR::p_direction(estimate) %>% round(., 3)) %>%
     mutate(term = gsub("b_", "", fixed = T, paste(.$term)))
 
   mod <- left_join(mod, p_beta, by = "term")
@@ -309,7 +309,7 @@ set_col_names <- function(model, doc_type = doc_type) {
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high, `p(β > 0)`)
+               `2.5%` = conf.low, `97.5%` = conf.high, MPE)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -325,8 +325,7 @@ set_col_names <- function(model, doc_type = doc_type) {
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high,
-               `p(B != 0)` = `p(β > 0)`)
+               `2.5%` = conf.low, `97.5%` = conf.high, MPE)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -415,16 +414,7 @@ set_doc_type <- function() {
   return(this_doc)
 }
 
-# For calculating posterior prob that beta is >< than 0
-prop_calc <- function(x) {
-  check <- mean(x)
 
-  if (check < 0 ) {
-    return(mean(x < 0))
-  } else {
-    return(mean(x > 0))
-  }
-}
 
 
 
