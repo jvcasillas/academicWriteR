@@ -5,9 +5,9 @@
 #' @param model a model object
 #' @param latex Output is LaTeX or markdown
 #' @keywords Report model
+#' @import dplyr
+#' @importFrom rlang .data
 #' @export
-#' @examples
-#'
 
 print_builder <- function(model, latex = TRUE) {
   UseMethod("print_builder")
@@ -22,7 +22,7 @@ print_builder.default <- function(model, latex = TRUE) {
     confidence(model[, "conf.low"], model[, "conf.high"], latex = latex),
     statistic(model[, "statistic"], latex = latex),
     print_pval(model[, "p.value"], latex = latex)) %>%
-      parenthesize()
+    parenthesize()
 
   if (latex == FALSE) {
     out <- gsub("-", "&minus;", out)
@@ -37,7 +37,7 @@ print_builder.brmsfit <- function(model, latex = TRUE) {
     parameterize(model[, "estimate"], latex = latex),
     std_error(model[, "std.error"], latex = latex),
     confidence(model[, "conf.low"], model[, "conf.high"], latex = latex)) %>%
-      parenthesize()
+    parenthesize()
 
   if (latex == FALSE) {
     out <- gsub("-", "&minus;", out)
@@ -51,20 +51,15 @@ print_builder.brmsfit <- function(model, latex = TRUE) {
 
 
 
-
 # Put parenthesis around something
 parenthesize <- function(x) {
-  l_side <- "("
-  r_side <- ")"
-  out <- paste0(l_side, x, r_side)
+  out <- paste0("(", x, ")")
   return(out)
 }
 
 # Put brackets around something
 bracketize <- function(x) {
-  l_side <- "["
-  r_side <- "]"
-  out <- paste0(l_side, x, r_side)
+  out <- paste0("[", x, "]")
   return(out)
 }
 
@@ -80,9 +75,7 @@ equalize <- function(x, latex = TRUE) {
 
 # Get into math mode
 mathesize <- function(x) {
-  sym_open <- " $"
-  sym_close <- "$ "
-  out <- paste0(sym_open, x, sym_close)
+  out <- paste0(" $", x, "$ ")
   return(out)
 }
 

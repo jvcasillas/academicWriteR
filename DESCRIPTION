@@ -1,7 +1,7 @@
 Package: academicWriteR
 Type: Package
 Title: Helper Functions for Academic Writing and Organization
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Joseph Vincent", "Casillas", , "joseph.casillas@rutgers.edu", role = c("aut", "cre"), 
       comment = c(ORCID = "0000-0001-8735-9910")))
@@ -12,8 +12,25 @@ URL: https://github.com/jvcasillas/academicWriteR
 BugReports: https://github.com/jvcasillas/academicWriteR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
+Depends:
+    dplyr
 Imports:
-    lme4, broom, lmerTest, broom.mixed, readr, tibble, tidytext, dplyr, rlang, 
-    stats
+    tidyr, 
+    lme4, 
+    broom, 
+    broom.mixed,
+    readr, 
+    tibble, 
+    tidytext, 
+    rlang, 
+    stats, 
+    knitr, 
+    kableExtra,
+    flextable, 
+    officer, 
+    forcats, 
+    bayestestR
+Suggests: 
+    lmerTest
 LazyData: true
 RoxygenNote: 6.1.1
