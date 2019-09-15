@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Helper Functions for Academic Writing and Organization • academicWriteR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Helper Functions for Academic Writing and Organization">
 <meta property="og:description" content="This package provides a functions that are useful for organizing 
     and writing academic papers in Rmarkdown.">
@@ -19,7 +20,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -31,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">academicWriteR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -39,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -50,7 +51,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jvcasillas/academicWriteR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -63,25 +64,25 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<div id="overview" class="section level2">
+      </header><div class="row">
+  <div class="contents col-md-9">
+
+<div id="overview-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview <img src="https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png" align="right" width="275px" style="padding-left:5px;">
+<a href="#overview-" class="anchor"></a>Overview <img src="https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png" align="right" width="275px" style="padding-left:5px;">
 </h2>
 <p>This is a package of helper functions that are useful for writing academic reports/manuscripts. The majority of the functions were written for reporting statistical analyses, but there are also a few functions that were designed for project management and document preparation using <code>papaja</code>.</p>
 </div>
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">academicWriteR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/academicWriteR/topics/print_dir_ul">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"./R"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>academicWriteR<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/academicWriteR/man/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"./R"</span>)</span></code></pre></div>
 <ul>
 <li>count_words.R</li>
 <li>create_project.R</li>
+<li>give_n_digits.R</li>
+<li>mod_to_table.R</li>
 <li>normal_approximation.R</li>
 <li>print_builder.R</li>
 <li>print_dir_ul.R</li>
@@ -100,74 +101,74 @@
 <h3 class="hasAnchor">
 <a href="#rounding" class="anchor"></a>Rounding</h3>
 <p><code>academicWriteR</code> includes a rounding function, <code>round_pval</code>, specifically for p-values. It is precise up to the thousandths column. Anything smaller than 0.001 is rounded to 0.001. <code>round_pval</code> is used in the printing functions.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(academicWriteR)</a>
-<a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.03765</span>) </a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.0000001</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.07</span>)</a></code></pre></div>
-<pre><code>## [1] ".038"
-## [1] ".001"
-## [1] ".07"</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(academicWriteR)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.03765</span>) </span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.0000001</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw"><a href="reference/round_pval.html">round_pval</a></span>(<span class="fl">0.07</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## [1] ".038"</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">## [1] ".001"</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">## [1] ".07"</span></span></code></pre></div>
 </div>
 <div id="printing-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#printing-functions" class="anchor"></a>Printing functions</h3>
 <p>The printing functions were made to facilitate reporting statistical models in RMarkdown using <code>papaja</code>. <code>papaja</code> comes with it’s own printing functions but I found that I am constantly tinkering with them to get things to work the way I prefer, thus I decided to make my own.</p>
 <p>The first is a wrapper around the <code>round_pval</code> function: <code>print_pval</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.03765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.03765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><em>p</em> = .038.</p>
 <p>P-values are printed exactly unless they are less than 0.001. Trailing 0’s are deleted.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.0765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="reference/print_pval.html">print_pval</a></span>(<span class="fl">0.0765</span>, <span class="dt">latex =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><em>p</em> = .076.</p>
 <p>This function is included in other printing functions. Set <code>latex = TRUE</code> is the output is LaTeX.</p>
 <div id="lm-example" class="section level4">
 <h4 class="hasAnchor">
-<a href="#lm-example" class="anchor"></a><code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> example</h4>
+<a href="#lm-example" class="anchor"></a><code>lm()</code> example</h4>
 <p>The printing functions are used for reporting the results of statistical analyses. There are designed to be used in in-line <code>knitr</code> chunks (i.e., <code>`r 1 + 1`</code>) in an RMarkdown document. Instead of going in to more detail here, I will just work through and example. First, I will fit a linear model with the <code>lm</code> function.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">lm_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm_mod1)<span class="op">$</span>coef</a></code></pre></div>
-<pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
-## (Intercept) 37.285126   1.877627 19.857575 8.241799e-19
-## wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>lm_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(lm_mod1)<span class="op">$</span>coef</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">##              Estimate Std. Error   t value     Pr(&gt;|t|)</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">## (Intercept) 37.285126   1.877627 19.857575 8.241799e-19</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">## wt          -5.344472   0.559101 -9.559044 1.293959e-10</span></span></code></pre></div>
 <p>In a typical write-up of the results we might say something like:</p>
 <p><strong>Miles per gallon varied as a function of <code>weight</code> (wt). Specifically, a 1-unit increase in weight was associated with a decrease in <code>mpg</code> of -5.34 +/- 0.56 standard errors (CI = [-6.49, -4.2]; <em>t</em> = -9.56; <em>p</em> &lt; .001).</strong></p>
 <p>The aforementioned sentence was written in RMarkdown like this:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">Miles per gallon varied as a <span class="cf">function</span> of <span class="st">`</span><span class="dt">weight</span><span class="st">`</span> (wt). Specifically, a </a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="dv">1</span><span class="op">-</span>unit increase <span class="cf">in</span> weight was associated with a decrease <span class="cf">in</span> <span class="st">`</span><span class="dt">mpg</span><span class="st">`</span> of </a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">`</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'estimate')</span><span class="st">`</span> </a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> `</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb8-5" title="5">standard errors <span class="st">`</span><span class="dt">r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)</span><span class="st">`</span>.</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>Miles per gallon varied as a <span class="cf">function</span> of <span class="st">`</span><span class="dt">weight</span><span class="st">`</span> (wt). Specifically, a </span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="dv">1</span><span class="op">-</span>unit increase <span class="cf">in</span> weight was associated with a decrease <span class="cf">in</span> <span class="st">`</span><span class="dt">mpg</span><span class="st">`</span> of </span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">`</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'estimate')</span><span class="st">`</span> </span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> `</span><span class="dt">r print_model_params(model = lm_mod1, predictor = 'wt', parameter = 'std.error')</span><span class="st">`</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>standard errors <span class="st">`</span><span class="dt">r print_model_params_p(model = lm_mod1, predictor = "wt", latex = FALSE)</span><span class="st">`</span>.</span></code></pre></div>
 <p>Here I use two print functions: <code>print_model_params</code> and <code>print_model_params_p</code>. The <code>_p</code> variant referes to parenthesis. In other words it prints the parameter information that I typically put between parenthesis. Notice each in-line chunk is given it’s own line (more on this below).</p>
 </div>
 <div id="lmer-example" class="section level4">
 <h4 class="hasAnchor">
-<a href="#lmer-example" class="anchor"></a><code><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer()</a></code> example</h4>
+<a href="#lmer-example" class="anchor"></a><code>lmer()</code> example</h4>
 <p>Here is another example using <code>lme4</code> objects.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lmerTest)</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom.mixed)</a>
-<a class="sourceLine" id="cb9-4" title="4">lmer_mod0 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</a>
-<a class="sourceLine" id="cb9-5" title="5">lmer_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</a>
-<a class="sourceLine" id="cb9-6" title="6">model_comparison &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(lmer_mod0, lmer_mod1, <span class="dt">test =</span> <span class="st">'Chisq'</span>)</a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lmer_mod1)<span class="op">$</span>coef</a></code></pre></div>
-<pre><code>##              Estimate Std. Error        df  t value    Pr(&gt;|t|)
-## (Intercept) 251.40510  9.5061887  24.49051 26.44647 1.58857e-19
-## Days         10.46729  0.8017354 162.00001 13.05579 4.46271e-27</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lmerTest)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(broom.mixed)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>lmer_mod0 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>lmer_mod1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy, <span class="dt">REML =</span> F)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>model_comparison &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(lmer_mod0, lmer_mod1, <span class="dt">test =</span> <span class="st">'Chisq'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(lmer_mod1)<span class="op">$</span>coef</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">##              Estimate Std. Error        df  t value    Pr(&gt;|t|)</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">## (Intercept) 251.40510  9.5061887  24.49051 26.44647 1.58857e-19</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">## Days         10.46729  0.8017354 162.00001 13.05579 4.46271e-27</span></span></code></pre></div>
 <p>And a possible write-up:</p>
 <p><strong>There was a main effect of days (χ<sup>2</sup>(1) = 116.46; <em>p</em> &lt; .001). Specifically, a change of one day was associated with an increase in reaction time of 10.47 ms +/- 0.8 standard errors (CI = [8.9, 12.04]; <em>t</em> = 13.06; <em>p</em> &lt; .001).</strong></p>
 <p>The above paragraph was written as follows:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="op">**</span>There was a main effect of days </a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="st">`</span><span class="dt">r print_nmc_p(table = model_comparison, model = 'lmer_mod1', latex = FALSE)</span><span class="st">`</span>. </a>
-<a class="sourceLine" id="cb11-3" title="3">Specifically, a change of one day was associated with an increase <span class="cf">in</span> reaction </a>
-<a class="sourceLine" id="cb11-4" title="4">time of </a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'estimate')</span><span class="st">`</span> </a>
-<a class="sourceLine" id="cb11-6" title="6">ms <span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'std.error')</span><span class="st">`</span> </a>
-<a class="sourceLine" id="cb11-8" title="8">standard errors </a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="st">`</span><span class="dt">r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)</span><span class="st">`</span>.<span class="op">**</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">**</span>There was a main effect of days </span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">`</span><span class="dt">r print_nmc_p(table = model_comparison, model = 'lmer_mod1', latex = FALSE)</span><span class="st">`</span>. </span>
+<span id="cb11-3"><a href="#cb11-3"></a>Specifically, a change of one day was associated with an increase <span class="cf">in</span> reaction </span>
+<span id="cb11-4"><a href="#cb11-4"></a>time of </span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'estimate')</span><span class="st">`</span> </span>
+<span id="cb11-6"><a href="#cb11-6"></a>ms <span class="op">+</span><span class="er">/</span><span class="op">-</span><span class="st"> </span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="st">`</span><span class="dt">r print_model_params(model = lmer_mod1, predictor = 'Days', parameter = 'std.error')</span><span class="st">`</span> </span>
+<span id="cb11-8"><a href="#cb11-8"></a>standard errors </span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="st">`</span><span class="dt">r print_model_params_p(model = lmer_mod1, predictor = "Days", latex = FALSE)</span><span class="st">`</span>.<span class="op">**</span></span></code></pre></div>
 <p>If you don’t interpret the effect directly in the prose you can print all the parameters at once using <code><a href="reference/print_model_param.html">print_model_param(model, parameter)</a></code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lm_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lmer_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lm_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw"><a href="reference/print_model_param.html">print_model_param</a></span>(lmer_mod1, <span class="st">"(Intercept)"</span>, <span class="dt">latex =</span> F)</span></code></pre></div>
 <p>Ex.<br>
 The intercept differed from 0 (β = 37.29; SE = 1.88; CI = [33.45, 41.12]; <em>t</em> = 19.86; <em>p</em> &lt; .001).</p>
 <p>Ex.<br>
@@ -178,32 +179,32 @@ The intercept differed from 0 (β = 251.41; SE = 9.51; CI = [232.77, 270.0
 <a href="#models-fitted-in-brms" class="anchor"></a>Models fitted in <code>brms</code>
 </h4>
 <p>You can now (v. 0.3) print <code>brms</code> model objects using <code>print_model_param</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(brms)</a>
-<a class="sourceLine" id="cb13-2" title="2">brms_mod &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/brms/topics/brm">brm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a></code></pre></div>
-<p>Miles per gallon varied as a function of weight (β = −5.35; SE = 0.58; CI = [−6.47, −4.25]).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(brms)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>brms_mod &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</span></code></pre></div>
+<p>Miles per gallon varied as a function of weight (β = −5.35; SE = 0.59; CI = [−6.51, −4.18]).</p>
 <p>…which was written as:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">Miles per gallon varied as a <span class="cf">function</span> of weight </a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">`</span><span class="dt">r print_model_param(brms_mod, "wt", latex = FALSE)</span><span class="st">`</span>.</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>Miles per gallon varied as a <span class="cf">function</span> of weight </span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="st">`</span><span class="dt">r print_model_param(brms_mod, "wt", latex = FALSE)</span><span class="st">`</span>.</span></code></pre></div>
 </div>
 <div id="directory-structures" class="section level4">
 <h4 class="hasAnchor">
 <a href="#directory-structures" class="anchor"></a>Directory structures</h4>
 <p>The <code>print_dir_ul</code> function will print the files of a given directory as an unordered list. This function was originally written to improve project management. I typically use it in README files to print the files in the current directory.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a></code></pre></div>
-<pre><code>## - academicWriteR.Rproj 
-##  - DESCRIPTION 
-##  - docs 
-##  - LICENSE 
-##  - man 
-##  - NAMESPACE 
-##  - R 
-##  - README_cache 
-##  - README.md 
-##  - README.Rmd</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="reference/print_dir_ul.html">print_dir_ul</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">## - academicWriteR.Rproj </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="co">##  - DESCRIPTION </span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co">##  - docs </span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co">##  - LICENSE </span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co">##  - man </span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co">##  - NAMESPACE </span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co">##  - R </span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="co">##  - README_cache </span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co">##  - README.md </span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co">##  - README.Rmd</span></span></code></pre></div>
 <p>If you set <code>results='asis'</code> in the knitr chunk you will get an unordered list in markdown/HTML.</p>
-<pre><code>```{r, 'print_dir_ul-ex', results='asis'}
-print_dir_ul(path = ".")
-```</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="st">```</span><span class="dt">{r, 'print_dir_ul-ex', results='asis'}</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="dt">print_dir_ul(path = ".")</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="st">```</span></span></code></pre></div>
 <ul>
 <li>academicWriteR.Rproj</li>
 <li>DESCRIPTION</li>
@@ -217,55 +218,60 @@ print_dir_ul(path = ".")
 <li>README.Rmd</li>
 </ul>
 <p>If you set <code>nested = TRUE</code> you can print the directory of your choice and the files nested within any subdirectories. Additionally, the <code>remove</code> argument can be used to exclude files/folders using regex.</p>
-<pre><code>```{r, 'print_dir_ul-ex2'}
-print_dir_ul(path = ".", nested = TRUE, remove = ".md")
-```</code></pre>
-<pre><code>## - academicWriteR.Rproj 
-##     -  
-## - DESCRIPTION 
-##     -  
-## - docs 
-##     - authors.html 
-##     - docsearch.css 
-##     - docsearch.js 
-##     - index.html 
-##     - LICENSE-text.html 
-##     - link.svg 
-##     - pkgdown.css 
-##     - pkgdown.js 
-##     - pkgdown.yml 
-##     - reference 
-## - LICENSE 
-##     -  
-## - man 
-##     - count_words.Rd 
-##     - create_project.Rd 
-##     - normal_approximation.Rd 
-##     - print_builder.Rd 
-##     - print_dir_ul.Rd 
-##     - print_model_param.Rd 
-##     - print_model_params_p.Rd 
-##     - print_model_params.Rd 
-##     - print_nmc_p.Rd 
-##     - print_pval.Rd 
-##     - round_pval.Rd 
-## - NAMESPACE 
-##     -  
-## - R 
-##     - count_words.R 
-##     - create_project.R 
-##     - normal_approximation.R 
-##     - print_builder.R 
-##     - print_dir_ul.R 
-##     - print_model_param.R 
-##     - print_model_params_p.R 
-##     - print_model_params.R 
-##     - print_nmc_p.R 
-##     - print_pval.R 
-##     - round_pval.R 
-## - README_cache 
-##     - gfm 
-##     - html</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="st">```</span><span class="dt">{r, 'print_dir_ul-ex2'}</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="dt">print_dir_ul(path = ".", nested = TRUE, remove = ".md")</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="st">```</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">## - academicWriteR.Rproj </span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">##     -  </span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">## - DESCRIPTION </span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">##     -  </span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">## - docs </span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co">##     - authors.html </span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">##     - docsearch.css </span></span>
+<span id="cb18-12"><a href="#cb18-12"></a><span class="co">##     - docsearch.js </span></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="co">##     - index.html </span></span>
+<span id="cb18-14"><a href="#cb18-14"></a><span class="co">##     - LICENSE-text.html </span></span>
+<span id="cb18-15"><a href="#cb18-15"></a><span class="co">##     - link.svg </span></span>
+<span id="cb18-16"><a href="#cb18-16"></a><span class="co">##     - pkgdown.css </span></span>
+<span id="cb18-17"><a href="#cb18-17"></a><span class="co">##     - pkgdown.js </span></span>
+<span id="cb18-18"><a href="#cb18-18"></a><span class="co">##     - pkgdown.yml </span></span>
+<span id="cb18-19"><a href="#cb18-19"></a><span class="co">##     - reference </span></span>
+<span id="cb18-20"><a href="#cb18-20"></a><span class="co">## - LICENSE </span></span>
+<span id="cb18-21"><a href="#cb18-21"></a><span class="co">##     -  </span></span>
+<span id="cb18-22"><a href="#cb18-22"></a><span class="co">## - man </span></span>
+<span id="cb18-23"><a href="#cb18-23"></a><span class="co">##     - count_words.Rd </span></span>
+<span id="cb18-24"><a href="#cb18-24"></a><span class="co">##     - create_project.Rd </span></span>
+<span id="cb18-25"><a href="#cb18-25"></a><span class="co">##     - give_n_digits.Rd </span></span>
+<span id="cb18-26"><a href="#cb18-26"></a><span class="co">##     - mod_to_table.Rd </span></span>
+<span id="cb18-27"><a href="#cb18-27"></a><span class="co">##     - normal_approximation.Rd </span></span>
+<span id="cb18-28"><a href="#cb18-28"></a><span class="co">##     - print_builder.Rd </span></span>
+<span id="cb18-29"><a href="#cb18-29"></a><span class="co">##     - print_dir_ul.Rd </span></span>
+<span id="cb18-30"><a href="#cb18-30"></a><span class="co">##     - print_model_param.Rd </span></span>
+<span id="cb18-31"><a href="#cb18-31"></a><span class="co">##     - print_model_params_p.Rd </span></span>
+<span id="cb18-32"><a href="#cb18-32"></a><span class="co">##     - print_model_params.Rd </span></span>
+<span id="cb18-33"><a href="#cb18-33"></a><span class="co">##     - print_nmc_p.Rd </span></span>
+<span id="cb18-34"><a href="#cb18-34"></a><span class="co">##     - print_pval.Rd </span></span>
+<span id="cb18-35"><a href="#cb18-35"></a><span class="co">##     - round_pval.Rd </span></span>
+<span id="cb18-36"><a href="#cb18-36"></a><span class="co">## - NAMESPACE </span></span>
+<span id="cb18-37"><a href="#cb18-37"></a><span class="co">##     -  </span></span>
+<span id="cb18-38"><a href="#cb18-38"></a><span class="co">## - R </span></span>
+<span id="cb18-39"><a href="#cb18-39"></a><span class="co">##     - count_words.R </span></span>
+<span id="cb18-40"><a href="#cb18-40"></a><span class="co">##     - create_project.R </span></span>
+<span id="cb18-41"><a href="#cb18-41"></a><span class="co">##     - give_n_digits.R </span></span>
+<span id="cb18-42"><a href="#cb18-42"></a><span class="co">##     - mod_to_table.R </span></span>
+<span id="cb18-43"><a href="#cb18-43"></a><span class="co">##     - normal_approximation.R </span></span>
+<span id="cb18-44"><a href="#cb18-44"></a><span class="co">##     - print_builder.R </span></span>
+<span id="cb18-45"><a href="#cb18-45"></a><span class="co">##     - print_dir_ul.R </span></span>
+<span id="cb18-46"><a href="#cb18-46"></a><span class="co">##     - print_model_param.R </span></span>
+<span id="cb18-47"><a href="#cb18-47"></a><span class="co">##     - print_model_params_p.R </span></span>
+<span id="cb18-48"><a href="#cb18-48"></a><span class="co">##     - print_model_params.R </span></span>
+<span id="cb18-49"><a href="#cb18-49"></a><span class="co">##     - print_nmc_p.R </span></span>
+<span id="cb18-50"><a href="#cb18-50"></a><span class="co">##     - print_pval.R </span></span>
+<span id="cb18-51"><a href="#cb18-51"></a><span class="co">##     - round_pval.R </span></span>
+<span id="cb18-52"><a href="#cb18-52"></a><span class="co">## - README_cache </span></span>
+<span id="cb18-53"><a href="#cb18-53"></a><span class="co">##     - gfm </span></span>
+<span id="cb18-54"><a href="#cb18-54"></a><span class="co">##     - html</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -274,17 +280,18 @@ print_dir_ul(path = ".", nested = TRUE, remove = ".md")
 <a href="#word-count" class="anchor"></a>Word count</h2>
 <p>If your output is a word document, you will probably find this function to be of little value. However, if your manuscript is knit as a PDF, you have probably discovered that there isn’t a straightforward way to get a word count, especially in a dynamic document.</p>
 <p>The <code>count_words</code> function will give an approximate count of words in an .Rmd document. It is not perfect—it is still a work in progress—, but it is pretty good if you are careful in how you write. The function uses regex to remove knitr code chunks, the standard variety as well as in-line code. For this reason it is best to keep in-line code chunks on their own line (to avoid not counting words that are also on the same line). Also, when using comments in RMarkdown (i.e., <code>&lt;!-- comment --&gt;</code>) one should keep each arrow on its own line. For example,</p>
-<pre><code>&lt;!--
-This is a comment
---&gt;</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="op">&lt;!--</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>This is a comment</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="op">-</span>-&gt;</span></code></pre></div>
 <p>If you write your comments like this:</p>
-<pre><code>&lt;!-- this is a comment --&gt;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="op">&lt;!--</span><span class="st"> </span>this is a comment <span class="op">-</span>-&gt;</span></code></pre></div>
 <p>no words will be counted after this point in the document (I am working on fixing this).</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">This document contains </a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb22-3" title="3">words. </a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>This document contains </span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">`</span><span class="dt">r count_words("README.Rmd")</span><span class="st">`</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>words. </span></code></pre></div>
 <p>This document contains 665 words.</p>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -308,12 +315,11 @@ This is a comment
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Joseph Vincent Casillas <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8735-9910" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Joseph Vincent Casillas <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8735-9910" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
-      </div>
-
+  </div>
 </div>
 
 
@@ -322,12 +328,14 @@ This is a comment
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
