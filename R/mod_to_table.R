@@ -415,7 +415,7 @@ set_doc_type <- function() {
 }
 
 
-
+# add ROPE?
 
 
 utils::globalVariables(
