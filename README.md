@@ -15,6 +15,8 @@ academicWriteR::print_dir_ul(path = "./R")
 
   - count\_words.R
   - create\_project.R
+  - give\_n\_digits.R
+  - mod\_to\_table.R
   - normal\_approximation.R
   - print\_builder.R
   - print\_dir\_ul.R
@@ -256,6 +258,8 @@ and the files nested within any subdirectories. Additionally, the
     ## - man 
     ##     - count_words.Rd 
     ##     - create_project.Rd 
+    ##     - give_n_digits.Rd 
+    ##     - mod_to_table.Rd 
     ##     - normal_approximation.Rd 
     ##     - print_builder.Rd 
     ##     - print_dir_ul.Rd 
@@ -270,6 +274,8 @@ and the files nested within any subdirectories. Additionally, the
     ## - R 
     ##     - count_words.R 
     ##     - create_project.R 
+    ##     - give_n_digits.R 
+    ##     - mod_to_table.R 
     ##     - normal_approximation.R 
     ##     - print_builder.R 
     ##     - print_dir_ul.R 
@@ -280,7 +286,8 @@ and the files nested within any subdirectories. Additionally, the
     ##     - print_pval.R 
     ##     - round_pval.R 
     ## - README_cache 
-    ##     - gfm
+    ##     - gfm 
+    ##     - html
 
 ## Word count
 

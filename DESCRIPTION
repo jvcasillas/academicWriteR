@@ -1,7 +1,7 @@
 Package: academicWriteR
 Type: Package
 Title: Helper Functions for Academic Writing and Organization
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Joseph Vincent", "Casillas", , "joseph.casillas@rutgers.edu", role = c("aut", "cre"), 
       comment = c(ORCID = "0000-0001-8735-9910")))
@@ -15,6 +15,7 @@ Encoding: UTF-8
 Depends:
     dplyr
 Imports:
+    tidyr, 
     lme4, 
     broom, 
     broom.mixed,
@@ -27,7 +28,8 @@ Imports:
     kableExtra,
     flextable, 
     officer, 
-    forcats
+    forcats, 
+    bayestestR
 Suggests: 
     lmerTest
 LazyData: true

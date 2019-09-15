@@ -420,4 +420,5 @@ set_doc_type <- function() {
 
 utils::globalVariables(
   c("effect", "component", "group", "p.value", "estimate", "std.error", "df",
-    "conf.low", "conf.high", "doc_type"))
+    "conf.low", "conf.high", "doc_type", "posterior_samples", "b_Intercept",
+    "MPE"))

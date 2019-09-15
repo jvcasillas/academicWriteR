@@ -17,7 +17,7 @@ and document preparation using `papaja`.
 
 ## Functions
 
-```{r, results='asis'}
+```{r, results='asis', message=F}
 academicWriteR::print_dir_ul(path = "./R")
 ```
 
@@ -31,7 +31,7 @@ It is precise up to the thousandths column. Anything smaller than 0.001 is
 rounded to 0.001. 
 `round_pval` is used in the printing functions.
 
-```{r, round_pval-ex, results='hold'} 
+```{r, round_pval-ex, results='hold', message=F} 
 library(academicWriteR)
 
 round_pval(0.03765) 
