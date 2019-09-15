@@ -1,0 +1,15 @@
+base
+academicWriteR
+Matrix
+lme4
+lmerTest
+broom.mixed
+dplyr
+Rcpp
+brms
+broom
+knitr
+kableExtra
+flextable
+officer
+forcats

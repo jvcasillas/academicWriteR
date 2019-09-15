@@ -1,0 +1,144 @@
+---
+title: "Untitled"
+output: pdf_document
+header-includes:
+  - \usepackage{tipa}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(academicWriteR)
+library(lme4)
+library(lmerTest)
+library(brms)
+```
+
+```{r, test, eval=F, echo=T}
+# Testing: try to see if you can determine the doc type and use it to 
+# set how the functions work
+doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+doc_type
+use_latex
+```
+
+
+
+
+```{r, fit-model, echo=TRUE, cache=TRUE, warning=F, message=F, results='hide'}
+mod1 <- lm(mpg ~ wt * drat, data = mtcars)
+mod2 <- glm(mpg ~ wt, data = mtcars, family = "gaussian")
+mod3 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
+mod4 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
+              data = cbpp, family = binomial)
+mod5 <- brm(mpg ~ wt, data = mtcars)
+```
+
+
+`r print_model_param(mod1, "wt")`  
+`r print_model_param(mod2, "(Intercept)")`  
+`r print_model_param(mod3, "(Intercept)")`  
+`r print_model_param(mod4, "(Intercept)")`  
+`r print_model_param(mod5, "wt")`
+
+
+
+
+
+
+# printing models to tables
+
+
+
+```{r, tester-word-lm, eval=T}
+mod_to_table(
+  mod1, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)", 
+                  WT = "wt", 
+                  DRAT = "drat", 
+                  `WT x DRAT` = "wt:drat"), 
+  col = c(1, 2), width = 1.5
+  )
+
+```
+
+<br>
+
+```{r, tester-word-lmer, eval=T}
+mod_to_table(
+  mod3, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)"), 
+  col = 1, width = 1.5
+  )
+
+```
+
+<br>
+
+```{r, tester-word-glmer, eval=T}
+mod_to_table(
+  mod4, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)"), 
+  col = 1, width = 1.5
+  )
+```
+
+<br>
+
+```{r, tester-word-brms, eval=T}
+mod_to_table(
+  mod5, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)"), 
+  col = 1, width = 1.5
+  )
+```
+
+
+
+
+
+
+
+special chars (subscripts, superscripts, IPA, math)
+
+```{r, built-kable-table, eval=F}
+hold <- suppressWarnings(broom::tidy(mod3, conf.int = TRUE))
+
+hold %>% 
+  kable(., format = "latex", booktabs = T, escape = T, 
+           caption = 'Posterior parameter estimates for voiced stops.', 
+           align = "r") %>% 
+  kable_styling(font_size = 11, latex_options = c("hold_position"))  
+
+```
+
+
+
+
+```{r, func-test}
+mod_to_table(
+  mod1, font_size = 11, 
+  param_names = c(Intercept = "(Intercept)", 
+                  `$\\delta VOT_{hi}$` = "wt", 
+                  `\\textipa{[BSsoODP]}` = "drat"))
+```
+
+
+- TO address
+  - captions
+  - use actual minus sign for negative numbers
+  - html functionality for mod_to_table
+  - add unit tests
+  - prob beta not equal to 0
+
+
+
+`r count_words(file = "~/Desktop/Untitled.Rmd")`
