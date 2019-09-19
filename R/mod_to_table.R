@@ -439,7 +439,8 @@ fix_params <- . %>%
   str_replace("\\(Intercept\\)", "Intercept")
 
 fix_summaries <- . %>%
-  str_replace("b_", "")
+  str_replace("b_", "") %>%
+  str_replace("\\.", ":")
 
 
 
