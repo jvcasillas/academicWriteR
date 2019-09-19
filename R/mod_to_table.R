@@ -1,6 +1,7 @@
 #' Model to table
 #'
-#' This function takes a model object generates a table
+#' This function takes a model object and generates a table in pdf, html or
+#' word format
 #'
 #' @param model A model object
 #' @param param_names For renaming the default parameter names
@@ -8,8 +9,12 @@
 #' @param left_align Columns that should be left aligned
 #' @param width The width in inches of the columns
 #' @param col The number of a specific column for width adjustments
+#' @param ci Range of the HDCI for brms models
+#' @param rope Range of the ROPE interval for brms models
 #' @keywords Report model
 #' @import dplyr
+#' @import tidyr
+#' @import stringr
 #' @export
 #' @examples
 #' mod <- lm(mpg ~ drat, data = mtcars)
@@ -17,7 +22,7 @@
 
 mod_to_table <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
   UseMethod("mod_to_table")
 }
 
@@ -26,7 +31,7 @@ mod_to_table <- function(
 # Default for lm/glm
 mod_to_table.default <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
 
   doc_type <- set_doc_type()
 
@@ -78,7 +83,7 @@ mod_to_table.default <- function(
 
 mod_to_table.lmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
 
   doc_type <- set_doc_type()
 
@@ -131,7 +136,7 @@ mod_to_table.lmerMod <- function(
 
 mod_to_table.lmerModLmerTest <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
 
   doc_type <- set_doc_type()
 
@@ -185,7 +190,7 @@ mod_to_table.lmerModLmerTest <- function(
 
 mod_to_table.glmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
 
   doc_type <- set_doc_type()
 
@@ -237,25 +242,41 @@ mod_to_table.glmerMod <- function(
 
 mod_to_table.brmsfit <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
-  col = NULL) {
+  col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
 
   doc_type <- set_doc_type()
 
   # Get tidy model
-  mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
+  mod <- broom::tidy(model, conf.int = TRUE) %>%
     filter(effect == "fixed") %>%
-    select(-effect, -component, -group)
+    select(term, estimate) %>%
+    mutate(term = fix_params(term)) %>%
+    suppressWarnings()
+
+
+  # calc HDCI
+  mod_hdci <- bayestestR::hdi(model, ci = ci) %>% as_tibble %>%
+    mutate_if(is.numeric, round, digits = 3) %>%
+    unite(HDI, CI_low, CI_high, sep = ", ") %>%
+    mutate(HDI = paste0("[", HDI, "]"),
+           term = fix_summaries(Parameter)) %>%
+    select(term, HDI)
+
+  # calc ROPE for HDCI
+  mod_rope <- bayestestR::rope(model, ci = ci, range = rope) %>% as_tibble %>%
+    mutate(term = fix_summaries(Parameter)) %>%
+    select(term, ROPE = ROPE_Percentage)
 
   # calc prob that given beta is > 0
-  p_beta <- posterior_samples(model) %>%
-    select(starts_with("b_")) %>%
-    rename(`(Intercept)` = b_Intercept) %>%
-    tidyr::gather(term, estimate) %>%
-    group_by(term) %>%
-    summarize(MPE = bayestestR::p_direction(estimate) %>% round(., 3)) %>%
-    mutate(term = gsub("b_", "", fixed = T, paste(.$term)))
+  p_beta <- bayestestR::p_direction(model) %>% as_tibble %>%
+    mutate(term = fix_summaries(Parameter)) %>%
+    select(term, MPE = pd)
 
-  mod <- left_join(mod, p_beta, by = "term")
+  mod <- left_join(mod, mod_hdci, by = "term") %>%
+    left_join(., mod_rope, by = "term") %>%
+    left_join(., p_beta, by = "term") %>%
+    select(term, estimate, HDI, ROPE, MPE) %>%
+    mutate_if(is.numeric, round, digits = 3)
 
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
@@ -298,6 +319,7 @@ mod_to_table.brmsfit <- function(
 
 
 # Helpers ---------------------------------------------------------------------
+
 # Add standard column names
 set_col_names <- function(model, doc_type = doc_type) {
   if (doc_type == "docx") {
@@ -308,8 +330,7 @@ set_col_names <- function(model, doc_type = doc_type) {
                p = p.value)
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high, MPE)
+        select(Parameter = term, Estimate = estimate, HDI, ROPE, MPE)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -324,8 +345,7 @@ set_col_names <- function(model, doc_type = doc_type) {
                `\\emph{t}` = statistic, df, `\\emph{p}` = p.value)
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `2.5%` = conf.low, `97.5%` = conf.high, MPE)
+        select(Parameter = term, Estimate = estimate, HDI, ROPE, MPE)
     } else {
       rename_cols <- . %>%
         select(Parameter = term, Estimate = estimate, SE = std.error,
@@ -414,11 +434,17 @@ set_doc_type <- function() {
   return(this_doc)
 }
 
+# Functional sequences to clean up brms table
+fix_params <- . %>%
+  str_replace("\\(Intercept\\)", "Intercept")
 
-# add ROPE?
+fix_summaries <- . %>%
+  str_replace("b_", "")
+
 
 
 utils::globalVariables(
   c("effect", "component", "group", "p.value", "estimate", "std.error", "df",
     "conf.low", "conf.high", "doc_type", "posterior_samples", "b_Intercept",
-    "MPE"))
+    "MPE", "HDI", "CI_low", "CI_high", "Parameter", "ROPE_Percentage", "pd",
+    "ROPE"))

@@ -15,7 +15,7 @@ Encoding: UTF-8
 Depends:
     dplyr
 Imports:
-    tidyr, 
+    tidyr,
     lme4, 
     broom, 
     broom.mixed,
@@ -29,7 +29,8 @@ Imports:
     flextable, 
     officer, 
     forcats, 
-    bayestestR
+    bayestestR, 
+    stringr
 Suggests: 
     lmerTest
 LazyData: true

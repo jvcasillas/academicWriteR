@@ -13,7 +13,7 @@ library(lmerTest)
 library(brms)
 ```
 
-```{r, test, eval=F, echo=T}
+```{r, test, eval=F}
 # Testing: try to see if you can determine the doc type and use it to 
 # set how the functions work
 doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
@@ -91,13 +91,13 @@ mod_to_table(
 
 <br>
 
-```{r, tester-word-brms, eval=T}
+```{r, tester-word-brms, eval=T, warning=F}
 mod_to_table(
   mod5, 
   font_size = 12, 
   left_align = 1, 
   param_names = c(Intercept = "(Intercept)"), 
-  col = 1, width = 1.5
+  col = 3, width = 1.5
   )
 ```
 
@@ -141,4 +141,49 @@ mod_to_table(
 
 
 
-`r count_words(file = "~/Desktop/Untitled.Rmd")`
+
+
+```{r, eval=F}
+mod5
+
+fix_params <- . %>%
+  str_replace("\\(Intercept\\)", "Intercept") 
+
+fix_summaries <- . %>% 
+  str_replace("b_", "")
+
+mod <- suppressWarnings(broom::tidy(mod6)) %>%
+    filter(effect == "fixed") %>%
+    select(term, estimate) %>% 
+    mutate(term = fix_params(term))
+
+  # calc HDCI
+mod_hdci <- bayestestR::hdi(mod6, ci = 0.95) %>% as_tibble %>%
+  mutate_if(is.numeric, round, digits = 3) %>%
+  unite(HDI, CI_low, CI_high, sep = ", ") %>%
+  mutate(HDI = paste0("[", HDI, "]"), 
+         term = fix_summaries(Parameter)) %>%
+  select(term, HDI)
+
+# calc ROPE for HDCI
+mod_rope <- bayestestR::rope(mod6, ci = 0.95, range = c(-0.1, 0.1)) %>% 
+  as_tibble %>% 
+  mutate(term = fix_summaries(Parameter)) %>% 
+  select(term, ROPE = ROPE_Percentage)
+
+# calc prob that given beta is > 0
+p_beta <- bayestestR::p_direction(mod6) %>% as_tibble %>% 
+  mutate(term = fix_summaries(Parameter)) %>% 
+  select(term, MPE = pd)
+
+  left_join(mod, mod_hdci, by = "term") %>%
+    left_join(., mod_rope, by = "term") %>%
+    left_join(., p_beta, by = "term") %>% 
+    select(term, estimate, HDI, ROPE, MPE) %>% 
+    mutate_if(is.numeric, round, digits = 3)
+
+
+
+
+```
+
