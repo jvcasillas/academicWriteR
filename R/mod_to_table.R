@@ -435,4 +435,4 @@ set_doc_type <- function() {
   return(this_doc)
 }
 
-utils::globalVariables(c("."))
+utils::globalVariables(".")
