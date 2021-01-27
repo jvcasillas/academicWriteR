@@ -3,3 +3,4 @@
 ^README.Rmd
 README_cache
 docs
+^\.github$

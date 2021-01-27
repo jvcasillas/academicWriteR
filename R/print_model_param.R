@@ -8,18 +8,14 @@
 #' @param latex Determine if output is LaTeX or markdown
 #' @keywords Report model
 #' @import dplyr
+#' @importFrom rlang .data
 #' @export
-#' @examples
 
 print_model_param <- function(model, parameter, latex = TRUE) {
-  UseMethod("print_model_param")
+  UseMethod(generic = "print_model_param", object = model)
 }
 
 #' @export
-#' @examples
-#' mod1 <- lm(mpg ~ wt, data = mtcars)
-#' print_model_param(mod1, "wt")
-#' print_model_param(mod1, "wt", latex = FALSE)
 
 print_model_param.default <- function(model, parameter, latex = TRUE){
 
@@ -27,7 +23,7 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_each(., give_n_digits, -term, -p.value)
+    mutate(across(-c("term", "p.value"), give_n_digits))
 
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
@@ -40,11 +36,6 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
 #' @export
 #' @import broom.mixed
-#' @examples
-#' library(lme4)
-#' library(dplyr)
-#' mod1a <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
-#' print_model_param(mod1a, "Days")
 
 print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
@@ -52,7 +43,7 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
   # Tidy model to facilitate printing
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_each(., give_n_digits, -term)
+    mutate(across(-.data$term, give_n_digits))
 
   # Filter row with parameter of interest
   mod_out <- mod[mod$term == parameter, ]
@@ -67,19 +58,17 @@ print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 }
 
 #' @export
-#' @examples
-#'
-
-print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
+print_model_param.brmsfit <- function(model, parameter, latex = TRUE, ...) {
 
   use_latex <- determine_latex()
 
   # Tidy model to facilitate printing
-  mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    mutate_each(., give_n_digits, -term)
+  mod <- bayestestR::describe_posterior(model) %>%
+    as_tibble() %>%
+    mutate(across(-.data$Parameter, give_n_digits))
 
   # Filter row with parameter of interest
-  mod_out <- mod[mod$term == parameter, ]
+  mod_out <- mod[mod$Parameter == paste0("b_", parameter), ]
 
   line <- print_builder.brmsfit(mod_out, latex = use_latex)
 
@@ -91,10 +80,8 @@ print_model_param.brmsfit <- function(model, parameter, latex = TRUE) {
 determine_latex <- function() {
   doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
   if (is.null(doc_type)) {
-    use_latex <- latex
+    use_latex <- "latex"
   } else {
     use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
   }
 }
-
-utils::globalVariables(c("latex", "term"))

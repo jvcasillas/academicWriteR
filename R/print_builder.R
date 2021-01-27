@@ -10,10 +10,10 @@
 #' @export
 
 print_builder <- function(model, latex = TRUE) {
-  UseMethod("print_builder")
+  UseMethod(generic = "print_builder", object = model)
 }
 
-
+#' @export
 # Generic builder
 print_builder.default <- function(model, latex = TRUE) {
   out <- paste(sep = "; ",
@@ -31,12 +31,14 @@ print_builder.default <- function(model, latex = TRUE) {
   return(out)
 }
 
+#' @export
 # Builder for bayesian models
 print_builder.brmsfit <- function(model, latex = TRUE) {
   out <- paste(sep = "; ",
-    parameterize(model[, "estimate"], latex = latex),
-    std_error(model[, "std.error"], latex = latex),
-    confidence(model[, "conf.low"], model[, "conf.high"], latex = latex)) %>%
+    parameterize(model[, "Median"], latex = latex),
+    confidence(model[, "CI_low"], model[, "CI_high"], latex = latex),
+    roper(model[, "ROPE_Percentage"], latex = latex),
+    mper(model[, "pd"], latex = latex)) %>%
     parenthesize()
 
   if (latex == FALSE) {
@@ -119,6 +121,28 @@ statistic <- function(x, latex = TRUE) {
                    x, "$")
   } else {
     stat <- paste0("*t*", equalize(latex = FALSE), x)
+  }
+  return(stat)
+}
+
+# Build rope
+roper <- function(x, latex = TRUE) {
+  if (latex == TRUE) {
+    stat <- paste0("ROPE", mathesize(equalize(latex = TRUE)), "$",
+                   x, "$")
+  } else {
+    stat <- paste0("ROPE", equalize(latex = FALSE), x)
+  }
+  return(stat)
+}
+
+# Build MPE
+mper <- function(x, latex = TRUE) {
+  if (latex == TRUE) {
+    stat <- paste0("MPE", mathesize(equalize(latex = TRUE)), "$",
+                   x, "$")
+  } else {
+    stat <- paste0("MPE", equalize(latex = FALSE), x)
   }
   return(stat)
 }

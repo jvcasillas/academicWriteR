@@ -17,6 +17,6 @@ with subdirectories, and .Rmd and .R templates.
 }
 \examples{
 # Create a new project with html report
-create_project(name = 'myProject', type = 'pdf')
+# create_project(name = 'my_project', type = 'pdf')
 }
 \keyword{projects}

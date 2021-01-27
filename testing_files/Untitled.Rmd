@@ -1,0 +1,158 @@
+---
+title: "Untitled"
+output: pdf_document
+header-includes:
+  - \usepackage{tipa}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("academicWriteR")
+library("lme4")
+library("lmerTest")
+library("brms")
+library("tidyverse")
+```
+
+```{r, test, eval=T}
+# Testing: try to see if you can determine the doc type and use it to 
+# set how the functions work
+doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+use_latex <- dplyr::if_else(doc_type == "latex", TRUE, FALSE)
+doc_type
+use_latex
+```
+
+
+## Fit models and inline printing
+
+```{r, fit-model, echo=TRUE, cache=TRUE, warning=F, message=F, results='hide'}
+mod1 <- lm(mpg ~ wt * drat, data = mtcars)
+mod2 <- glm(mpg ~ wt, data = mtcars, family = "gaussian")
+mod3 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
+mod4 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
+              data = cbpp, family = binomial)
+mod5 <- brm(mpg ~ wt, data = mtcars, file = here::here("testing_files", "mod5"))
+```
+
+
+`r print_model_param(mod1, "wt")`  
+`r print_model_param(mod2, "(Intercept)")`  
+`r print_model_param(mod3, "(Intercept)")`  
+`r print_model_param(mod4, "(Intercept)")`  
+`r print_model_param(mod5, "wt")`
+
+
+
+\clearpage
+
+```{=openxml}
+<w:p>
+  <w:r>
+    <w:br w:type="page"/>
+  </w:r>
+</w:p>
+```
+
+
+
+
+# Printing models to tables
+
+## lm
+
+```{r, tester-word-lm, eval=T}
+mod_to_table(
+  mod1, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)", 
+                  WT = "wt", 
+                  DRAT = "drat", 
+                  `WT x DRAT` = "wt:drat"), 
+  col = c(1, 2), width = 1.5
+  )
+
+```
+
+<br>
+
+## lmer
+
+```{r, tester-word-lmer, eval=T}
+mod_to_table(
+  mod3, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)"), 
+  col = 1, width = 1.5
+  )
+
+```
+
+<br>
+
+
+## glmer
+
+```{r, tester-word-glmer, eval=T}
+mod_to_table(
+  mod4, 
+  font_size = 12, 
+  left_align = 1, 
+  param_names = c(Intercept = "(Intercept)"), 
+  col = 1, width = 1.5
+  )
+```
+
+<br>
+
+## brms
+
+```{r, tester-word-brms, eval=T, warning=T}
+mod_to_table(
+  mod5, 
+  font_size = 12, 
+  left_align = 1, 
+  #param_names = c(Intercept = "b_Intercept"), 
+  col = c(1, 3), width = 1.5
+  )
+```
+
+
+
+```{=openxml}
+<w:p>
+  <w:r>
+    <w:br w:type="page"/>
+  </w:r>
+</w:p>
+```
+
+
+
+
+
+
+
+
+```{r, func-test, eval=F}
+mod_to_table(
+  mod1, font_size = 11, 
+  param_names = c(Intercept = "(Intercept)", 
+                  `$\\delta VOT_{hi}$` = "wt", 
+                  `\\textipa{[BSsoODP]}` = "drat"))
+```
+
+
+- TO address
+  - captions
+  - use actual minus sign for negative numbers
+  - html functionality for mod_to_table
+  - add unit tests
+  - prob beta not equal to 0
+
+
+
+
+
