@@ -7,7 +7,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <!-- badges: start -->
-  [![R-CMD-check](https://github.com/jvcasillas/academicWriteR/workflows/R-CMD-check/badge.svg)](https://github.com/jvcasillas/academicWriteR/actions)
+[![R-CMD-check](https://github.com/jvcasillas/academicWriteR/workflows/R-CMD-check/badge.svg)](https://github.com/jvcasillas/academicWriteR/actions)  
+[![CodeFactor](https://www.codefactor.io/repository/github/jvcasillas/academicwriter/badge)](https://www.codefactor.io/repository/github/jvcasillas/academicwriter)
 <!-- badges: end -->
 
 ## Overview <img src='https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/academicWriteR.png' align='right' width='275px' style="padding-left:5px;"/>
