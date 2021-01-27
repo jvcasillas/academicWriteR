@@ -70,7 +70,7 @@ mod_to_table.default <- function(
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
-                                latex_options = c("hold_position"))
+                                latex_options = "hold_position")
   }
 
 }
@@ -122,7 +122,7 @@ mod_to_table.lmerMod <- function(
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
-                                latex_options = c("hold_position"))
+                                latex_options = "hold_position")
 
   }
 }
@@ -172,7 +172,7 @@ mod_to_table.lmerModLmerTest <- function(
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
-                                latex_options = c("hold_position"))
+                                latex_options = "hold_position")
 
   }
 }
@@ -223,7 +223,7 @@ mod_to_table.glmerMod <- function(
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
-                                latex_options = c("hold_position"))
+                                latex_options = "hold_position")
 
   }
 }
@@ -277,7 +277,7 @@ mod_to_table.brmsfit <- function(
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
-                                latex_options = c("hold_position"))
+                                latex_options = "hold_position")
 
   }
 }
@@ -300,7 +300,7 @@ mod_to_table.brmsfit <- function(
 #
 set_col_names <- function(model, doc_type = doc_type) {
   if (doc_type == "docx") {
-    if (class(model)[1] %in% c("lmerModLmerTest")) {
+    if (class(model)[1] %in% "lmerModLmerTest") {
       rename_cols <- . %>%
         select(Parameter = .data$term, Estimate = .data$estimate,
                SE = .data$std.error, `CI low` = .data$conf.low,
@@ -318,7 +318,7 @@ set_col_names <- function(model, doc_type = doc_type) {
     }
     return(rename_cols)
   } else {
-    if (class(model)[1] %in% c("lmerModLmerTest")) {
+    if (class(model)[1] %in% "lmerModLmerTest") {
       rename_cols <- . %>%
         select(Parameter = .data$term, Estimate = .data$estimate,
                SE = .data$std.error, `CI low` = .data$conf.low,
