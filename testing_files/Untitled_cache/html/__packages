@@ -13,3 +13,10 @@ kableExtra
 flextable
 officer
 forcats
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+stringr

@@ -1,7 +1,7 @@
 #' Model to table
 #'
-#' This function takes a model object and generates a table in pdf, html or
-#' word format
+#' This function takes a model object and generates a table in pdf or word
+#' format.
 #'
 #' @param model A model object
 #' @param param_names For renaming the default parameter names
@@ -15,6 +15,7 @@
 #' @import dplyr
 #' @import tidyr
 #' @import stringr
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' mod <- lm(mpg ~ drat, data = mtcars)
@@ -23,7 +24,7 @@
 mod_to_table <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
-  UseMethod("mod_to_table")
+  UseMethod(generic = "mod_to_table", object = model)
 }
 
 
@@ -52,7 +53,7 @@ mod_to_table.default <- function(
   standard_flex <- set_flex(model)
 
   mod %>%
-    mutate_each(give_n_digits, -term, -p.value) %>%
+    mutate(across(-c("term", "p.value"), give_n_digits)) %>%
     format_p %>%
     rename_cols %>%
     standard_flex %>%
@@ -62,11 +63,10 @@ mod_to_table.default <- function(
     set_col_widths
   } else {
     mod %>%
-      mutate_each(give_n_digits, -term, -p.value) %>%
+      mutate(across(-c("term", "p.value"), give_n_digits)) %>%
       format_p %>%
       rename_cols %>%
-      knitr::kable(., format = "latex", booktabs = T, escape = F,
-           #caption = 'Posterior parameter estimates for voiced stops.',
+      knitr::kable(format = "latex", booktabs = T, escape = F,
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
       kableExtra::kable_styling(font_size = font_size,
@@ -77,10 +77,7 @@ mod_to_table.default <- function(
 
 
 #' @export
-#' @examples
-#' mod1a <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
-#' mod_to_table(mod1a)
-
+# Default for lmer
 mod_to_table.lmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
@@ -89,8 +86,8 @@ mod_to_table.lmerMod <- function(
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    filter(group == "fixed") %>%
-    select(-group)
+    filter(.data$group == "fixed") %>%
+    select(-.data$group)
 
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
@@ -107,7 +104,7 @@ mod_to_table.lmerMod <- function(
 
   # Print table
   mod %>%
-  mutate_each(give_n_digits, -term, -p.value) %>%
+  mutate(across(-c("term", "p.value"), give_n_digits)) %>%
     format_p %>%
     rename_cols %>%
     standard_flex %>%
@@ -117,10 +114,10 @@ mod_to_table.lmerMod <- function(
     set_col_widths
   } else {
     mod %>%
-      mutate_each(give_n_digits, -term, -p.value) %>%
+      mutate(across(-c("term", "p.value"), give_n_digits)) %>%
       format_p %>%
       rename_cols %>%
-      knitr::kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
@@ -132,8 +129,7 @@ mod_to_table.lmerMod <- function(
 
 
 #' @export
-#' @examples
-
+# Default for lmer if lmerTest is loaded
 mod_to_table.lmerModLmerTest <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
@@ -142,8 +138,8 @@ mod_to_table.lmerModLmerTest <- function(
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    filter(effect == "fixed") %>%
-    select(-effect, -group)
+    filter(.data$effect == "fixed") %>%
+    select(-.data$effect, -.data$group)
 
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
@@ -158,7 +154,7 @@ mod_to_table.lmerModLmerTest <- function(
   standard_flex <- set_flex(model)
 
   mod %>%
-  mutate_each(give_n_digits, -term, -p.value) %>%
+  mutate(across(-c("term", "p.value"), give_n_digits)) %>%
     format_p %>%
     rename_cols %>%
     standard_flex %>%
@@ -168,10 +164,10 @@ mod_to_table.lmerModLmerTest <- function(
     set_col_widths
   } else {
     mod %>%
-      mutate_each(give_n_digits, -term, -p.value) %>%
+      mutate(across(-c("term", "p.value"), give_n_digits)) %>%
       format_p %>%
       rename_cols %>%
-      knitr::kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
@@ -183,11 +179,7 @@ mod_to_table.lmerModLmerTest <- function(
 
 
 #' @export
-#' @examples
-#' mod4 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
-#'               data = cbpp, family = binomial)
-#' mod_to_table(mod4)
-
+# Default for glmer
 mod_to_table.glmerMod <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
@@ -196,8 +188,8 @@ mod_to_table.glmerMod <- function(
 
   # Get tidy model
   mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
-    filter(effect == "fixed") %>%
-    select(-effect, -group)
+    filter(.data$effect == "fixed") %>%
+    select(-.data$effect, -.data$group)
 
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
@@ -213,7 +205,7 @@ mod_to_table.glmerMod <- function(
 
   # Print table
   mod %>%
-  mutate_each(give_n_digits, -term, -p.value) %>%
+  mutate(across(-c("term", "p.value"), give_n_digits)) %>%
     format_p %>%
     rename_cols %>%
     standard_flex %>%
@@ -223,10 +215,10 @@ mod_to_table.glmerMod <- function(
     set_col_widths
   } else {
     mod %>%
-      mutate_each(give_n_digits, -term, -p.value) %>%
+      mutate(across(-c("term", "p.value"), give_n_digits)) %>%
       format_p %>%
       rename_cols %>%
-      knitr::kable(., format = "latex", booktabs = T, escape = F,
+      knitr::kable(format = "latex", booktabs = T, escape = F,
            #caption = 'Posterior parameter estimates for voiced stops.',
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
@@ -238,8 +230,7 @@ mod_to_table.glmerMod <- function(
 
 
 #' @export
-#' @examples
-
+# Default for brms
 mod_to_table.brmsfit <- function(
   model, param_names = NULL, font_size = 11, left_align = 1, width = NULL,
   col = NULL, ci = 0.95, rope = c(-0.1, 0.1)) {
@@ -247,36 +238,14 @@ mod_to_table.brmsfit <- function(
   doc_type <- set_doc_type()
 
   # Get tidy model
-  mod <- broom::tidy(model, conf.int = TRUE) %>%
-    filter(effect == "fixed") %>%
-    select(term, estimate) %>%
-    mutate(term = fix_params(term)) %>%
-    suppressWarnings()
-
-
-  # calc HDCI
-  mod_hdci <- bayestestR::hdi(model, ci = ci) %>% as_tibble %>%
-    mutate_if(is.numeric, round, digits = 3) %>%
-    unite(HDI, CI_low, CI_high, sep = ", ") %>%
-    mutate(HDI = paste0("[", HDI, "]"),
-           term = fix_summaries(Parameter)) %>%
-    select(term, HDI)
-
-  # calc ROPE for HDCI
-  mod_rope <- bayestestR::rope(model, ci = ci, range = rope) %>% as_tibble %>%
-    mutate(term = fix_summaries(Parameter)) %>%
-    select(term, ROPE = ROPE_Percentage)
-
-  # calc prob that given beta is > 0
-  p_beta <- bayestestR::p_direction(model) %>% as_tibble %>%
-    mutate(term = fix_summaries(Parameter)) %>%
-    select(term, MPE = pd)
-
-  mod <- left_join(mod, mod_hdci, by = "term") %>%
-    left_join(., mod_rope, by = "term") %>%
-    left_join(., p_beta, by = "term") %>%
-    select(term, estimate, HDI, ROPE, MPE) %>%
-    mutate_if(is.numeric, round, digits = 3)
+  mod <- bayestestR::describe_posterior(model, ci = ci, rope_ci = ci,
+                                        rope_range = rope) %>%
+    as_tibble() %>%
+    mutate(across(.data$Parameter, give_n_digits)) %>%
+    mutate(HDI = paste0("[", give_n_digits(.data$CI_low, 2), ", ",
+           give_n_digits(.data$CI_high, 2), "]")) %>%
+    select(term = .data$Parameter, estimate = .data$Median, .data$HDI,
+           ROPE = .data$ROPE_Percentage, MPE = .data$pd)
 
   # Create vector of number of columns for alignment
   n_cols <- 1:length(colnames(mod))
@@ -292,7 +261,7 @@ mod_to_table.brmsfit <- function(
 
     # Print table
     mod %>%
-    mutate_each(give_n_digits, -term) %>%
+    mutate(across(-.data$term, give_n_digits)) %>%
       rename_cols %>%
       standard_flex %>%
       flextable::fontsize(size = font_size, part = "all") %>%
@@ -301,9 +270,9 @@ mod_to_table.brmsfit <- function(
       set_col_widths
   } else {
     mod %>%
-      mutate_each(give_n_digits, -term) %>%
+      mutate(across(-.data$term, give_n_digits)) %>%
       rename_cols %>%
-      knitr::kable(., format = "latex", booktabs = T, escape = T,
+      knitr::kable(format = "latex", booktabs = T, escape = T,
            #caption = 'Posterior parameter estimates for voiced stops.',
            align = c("@{}l", rep("r", length(n_cols) -2), "r@{}")
            ) %>%
@@ -319,44 +288,62 @@ mod_to_table.brmsfit <- function(
 
 
 # Helpers ---------------------------------------------------------------------
+#
+# These are helper functions used in the mod_to_table function(s)
+# The helpers are not exported to academicWriteR
+
 
 # Add standard column names
+#
+# This function standardizes the column names that come out of broom::tidy or
+# bayestestR::describe_posterior
+#
 set_col_names <- function(model, doc_type = doc_type) {
   if (doc_type == "docx") {
     if (class(model)[1] %in% c("lmerModLmerTest")) {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `CI low` = conf.low, `CI high` = conf.high, t = statistic, df,
-               p = p.value)
+        select(Parameter = .data$term, Estimate = .data$estimate,
+               SE = .data$std.error, `CI low` = .data$conf.low,
+               `CI high` = .data$conf.high, t = statistic, .data$df,
+               p = .data$p.value)
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, HDI, ROPE, MPE)
+        select(Parameter = .data$term, Estimate = .data$estimate, .data$HDI,
+               .data$ROPE, .data$MPE)
     } else {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `CI low` = conf.low, `CI high` = conf.high, t = statistic,
-               p = p.value)
+        select(Parameter = .data$term, Estimate = .data$estimate,
+               SE = .data$std.error, `CI low` = .data$conf.low,
+               `CI high` = .data$conf.high, t = statistic, p = .data$p.value)
     }
+    return(rename_cols)
   } else {
     if (class(model)[1] %in% c("lmerModLmerTest")) {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `CI low` = conf.low, `CI high` = conf.high,
-               `\\emph{t}` = statistic, df, `\\emph{p}` = p.value)
+        select(Parameter = .data$term, Estimate = .data$estimate,
+               SE = .data$std.error, `CI low` = .data$conf.low,
+               `CI high` = .data$conf.high, `\\emph{t}` = statistic, .data$df,
+               `\\emph{p}` = .data$p.value)
     } else if (class(model)[1] == "brmsfit") {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, HDI, ROPE, MPE)
+        select(Parameter = .data$term, Estimate = .data$estimate, .data$HDI,
+               .data$ROPE, .data$MPE)
     } else {
       rename_cols <- . %>%
-        select(Parameter = term, Estimate = estimate, SE = std.error,
-               `CI low` = conf.low, `CI high` = conf.high,
-               `\\emph{t}` = statistic, `\\emph{p}` = p.value)
+        select(Parameter = .data$term, Estimate = .data$estimate,
+               SE = .data$std.error, `CI low` = .data$conf.low,
+               `CI high` = .data$conf.high, `\\emph{t}` = statistic,
+               `\\emph{p}` = .data$p.value)
     }
   }
+  return(rename_cols)
 }
 
 
 # Adjust parameter names
+#
+# Customize parameter names if necessary
+#
 parameter_adj <- function(mod, param_names = NULL) {
 
   if (!is.null(param_names)) {
@@ -370,35 +357,41 @@ parameter_adj <- function(mod, param_names = NULL) {
 
 
 # Standard flextable format
+#
+# Table template for when knitting to word
+#
 set_flex <- function(model) {
   if (class(model) == "brmsfit") {
     standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
+    flextable::flextable(.) %>%
+    flextable::font(fontname = "Times", part = "all") %>%
+    flextable::border_remove() %>%
+    flextable::border(part = "header",
               border.top = officer::fp_border(width = 0.95),
               border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
+    flextable::hline_bottom(part = "body",
                             border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all")
+    flextable::padding(padding = 0, part = "all")
   } else {
     standard_flex <- . %>%
-    flextable::flextable() %>%
-    flextable::font(., fontname = "Times", part = "all") %>%
-    flextable::border_remove(.) %>%
-    flextable::border(., part = "header",
+    flextable::flextable(.) %>%
+    flextable::font(fontname = "Times", part = "all") %>%
+    flextable::border_remove() %>%
+    flextable::border(part = "header",
               border.top = officer::fp_border(width = 0.95),
               border.bottom = officer::fp_border(width = 0.75)) %>%
-    flextable::hline_bottom(., part = "body",
+    flextable::hline_bottom(part = "body",
                             border = officer::fp_border(width = 0.95)) %>%
-    flextable::padding(., padding = 0, part = "all") %>%
-    flextable::italic(., italic = TRUE, part = "header", j = c("t", "p"))
+    flextable::padding(padding = 0, part = "all") %>%
+    flextable::italic(italic = TRUE, part = "header", j = c("t", "p"))
   }
 }
 
 
 # Add pvalue if missing
+#
+# Approximate a pvalue for lmer objects when lmerTest is not loaded
+#
 add_p <- function(mod) {
   if(!("p.value" %in% colnames(mod))) {
     mod$p.value <- normal_approximation(as.numeric(mod$statistic))
@@ -407,6 +400,7 @@ add_p <- function(mod) {
 
 
 # Format the pvalues and remove fluff
+#
 format_p <- . %>%
   mutate(p.value = print_pval(p.value, latex = F)) %>%
   mutate(p.value = gsub("*p* = ", "", fixed = T, paste(.$p.value))) %>%
@@ -414,18 +408,25 @@ format_p <- . %>%
 
 
 # Determine columns widths
+#
+# Custom column widths for tables in word
+#
 column_widths <- function(width = NULL, col = NULL) {
   # Set col widths (default to 1)
   if (is.null(width)) {
-    set_col_widths <- . %>% flextable::width(., width = 1)
+    set_col_widths <- . %>% flextable::width(width = 1)
     } else if (is.numeric(width & is.null(col))) {
-    set_col_widths <- . %>% flextable::width(., width = width)
+    set_col_widths <- . %>% flextable::width(width = width)
     } else {
-    set_col_widths <- . %>% flextable::width(., j = col, width = width)
+    set_col_widths <- . %>% flextable::width(j = col, width = width)
   }
 }
 
 # Get document type/set default
+#
+# Use knitr::opts_knit$get to determine what the document is being knit as
+# and set accordingly so LaTeX or word versions are selected automatically
+#
 set_doc_type <- function() {
   this_doc <- knitr::opts_knit$get('rmarkdown.pandoc.to')
   if (is.null(this_doc)) {
@@ -434,18 +435,4 @@ set_doc_type <- function() {
   return(this_doc)
 }
 
-# Functional sequences to clean up brms table
-fix_params <- . %>%
-  str_replace("\\(Intercept\\)", "Intercept")
-
-fix_summaries <- . %>%
-  str_replace("b_", "") %>%
-  str_replace("\\.", ":")
-
-
-
-utils::globalVariables(
-  c("effect", "component", "group", "p.value", "estimate", "std.error", "df",
-    "conf.low", "conf.high", "doc_type", "posterior_samples", "b_Intercept",
-    "MPE", "HDI", "CI_low", "CI_high", "Parameter", "ROPE_Percentage", "pd",
-    "ROPE"))
+utils::globalVariables(c("."))

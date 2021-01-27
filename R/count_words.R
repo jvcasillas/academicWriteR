@@ -15,13 +15,13 @@
 # Get word count
 count_words <- function(file) {
   wc <- readr::read_lines(file) %>%
-    tibble::as_data_frame(.) %>%
-    remove_front_matter(.) %>%
-    remove_code_chunks(.) %>%
-    remove_inline_code(.) %>%
-    remove_html_comment(.) %>%
-    tidytext::unnest_tokens(., output = .data$words, input = value) %>%
-    nrow(.)
+    tibble::as_data_frame() %>%
+    remove_front_matter() %>%
+    remove_code_chunks() %>%
+    remove_inline_code() %>%
+    remove_html_comment() %>%
+    tidytext::unnest_tokens(output = .data$words, input = .data$value) %>%
+    nrow()
   return(wc)
 }
 
@@ -35,10 +35,10 @@ is_odd <- function(x, val) {
 # anything between)
 remove_front_matter <- function(x) {
   mutate(x, is_code = cumsum(grepl("^---", .data$value))) %>%
-    group_by(., .data$is_code) %>%
-    mutate(., start_end = lag(.data$is_code, 1)) %>%
-    ungroup(.) %>%
-    filter(., !is_odd(.data$is_code), !is.na(.data$start_end)) %>%
+    group_by(.data$is_code) %>%
+    mutate(start_end = lag(.data$is_code, 1)) %>%
+    ungroup() %>%
+    filter(!is_odd(.data$is_code), !is.na(.data$start_end)) %>%
     select(-.data$is_code, -.data$start_end)
 }
 
@@ -46,11 +46,11 @@ remove_front_matter <- function(x) {
 # and anything in between)
 remove_code_chunks <- function(x) {
   mutate(x, is_code = cumsum(grepl("^```", .data$value))) %>%
-    group_by(., .data$is_code) %>%
-    mutate(., start_end = lag(.data$is_code, 1)) %>%
-    ungroup(.) %>%
-    mutate(., is_odd = is_odd(.data$is_code)) %>%
-    filter(., .data$is_odd != TRUE, !is.na(.data$start_end)) %>%
+    group_by(.data$is_code) %>%
+    mutate(start_end = lag(.data$is_code, 1)) %>%
+    ungroup() %>%
+    mutate(is_odd = is_odd(.data$is_code)) %>%
+    filter(.data$is_odd != TRUE, !is.na(.data$start_end)) %>%
     select(-.data$is_code, -.data$start_end, -.data$is_odd)
 }
 
@@ -63,13 +63,12 @@ remove_inline_code <- function(x) {
 remove_html_comment <- function(x) {
   mutate(x, start_comment = cumsum(grepl("^<!--", .data$value)),
             end_comment = cumsum(grepl("^-->", .data$value))) %>%
-    group_by(., .data$start_comment, .data$end_comment) %>%
-    mutate(., start_end = lag(.data$start_comment, 1)) %>%
-    ungroup(.) %>%
-    mutate(., remove = if_else(.data$start_comment - .data$end_comment == 1 |
+    group_by(.data$start_comment, .data$end_comment) %>%
+    mutate(start_end = lag(.data$start_comment, 1)) %>%
+    ungroup() %>%
+    mutate(remove = if_else(.data$start_comment - .data$end_comment == 1 |
                                is.na(.data$start_end), 1, 0)) %>%
-    filter(., remove != TRUE) %>%
+    filter(remove != TRUE) %>%
     select(-.data$start_comment, -.data$end_comment, -.data$remove)
 }
 
-utils::globalVariables(c(".", "value"))

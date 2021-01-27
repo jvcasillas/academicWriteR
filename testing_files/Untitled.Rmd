@@ -7,23 +7,24 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(academicWriteR)
-library(lme4)
-library(lmerTest)
-library(brms)
+library("academicWriteR")
+library("lme4")
+library("lmerTest")
+library("brms")
+library("tidyverse")
 ```
 
-```{r, test, eval=F}
+```{r, test, eval=T}
 # Testing: try to see if you can determine the doc type and use it to 
 # set how the functions work
 doc_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-use_latex <- ifelse(doc_type == "latex", yes = TRUE, no = FALSE)
+use_latex <- dplyr::if_else(doc_type == "latex", TRUE, FALSE)
 doc_type
 use_latex
 ```
 
 
-
+## Fit models and inline printing
 
 ```{r, fit-model, echo=TRUE, cache=TRUE, warning=F, message=F, results='hide'}
 mod1 <- lm(mpg ~ wt * drat, data = mtcars)
@@ -31,7 +32,7 @@ mod2 <- glm(mpg ~ wt, data = mtcars, family = "gaussian")
 mod3 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy)
 mod4 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
               data = cbpp, family = binomial)
-mod5 <- brm(mpg ~ wt, data = mtcars)
+mod5 <- brm(mpg ~ wt, data = mtcars, file = here::here("testing_files", "mod5"))
 ```
 
 
@@ -43,12 +44,22 @@ mod5 <- brm(mpg ~ wt, data = mtcars)
 
 
 
+\clearpage
+
+```{=openxml}
+<w:p>
+  <w:r>
+    <w:br w:type="page"/>
+  </w:r>
+</w:p>
+```
 
 
 
-# printing models to tables
 
+# Printing models to tables
 
+## lm
 
 ```{r, tester-word-lm, eval=T}
 mod_to_table(
@@ -66,6 +77,8 @@ mod_to_table(
 
 <br>
 
+## lmer
+
 ```{r, tester-word-lmer, eval=T}
 mod_to_table(
   mod3, 
@@ -79,6 +92,9 @@ mod_to_table(
 
 <br>
 
+
+## glmer
+
 ```{r, tester-word-glmer, eval=T}
 mod_to_table(
   mod4, 
@@ -91,39 +107,36 @@ mod_to_table(
 
 <br>
 
-```{r, tester-word-brms, eval=T, warning=F}
+## brms
+
+```{r, tester-word-brms, eval=T, warning=T}
 mod_to_table(
   mod5, 
   font_size = 12, 
   left_align = 1, 
-  param_names = c(Intercept = "(Intercept)"), 
-  col = 3, width = 1.5
+  #param_names = c(Intercept = "b_Intercept"), 
+  col = c(1, 3), width = 1.5
   )
 ```
 
 
 
-
-
-
-
-special chars (subscripts, superscripts, IPA, math)
-
-```{r, built-kable-table, eval=F}
-hold <- suppressWarnings(broom::tidy(mod3, conf.int = TRUE))
-
-hold %>% 
-  kable(., format = "latex", booktabs = T, escape = T, 
-           caption = 'Posterior parameter estimates for voiced stops.', 
-           align = "r") %>% 
-  kable_styling(font_size = 11, latex_options = c("hold_position"))  
-
+```{=openxml}
+<w:p>
+  <w:r>
+    <w:br w:type="page"/>
+  </w:r>
+</w:p>
 ```
 
 
 
 
-```{r, func-test}
+
+
+
+
+```{r, func-test, eval=F}
 mod_to_table(
   mod1, font_size = 11, 
   param_names = c(Intercept = "(Intercept)", 
@@ -142,48 +155,4 @@ mod_to_table(
 
 
 
-
-```{r, eval=F}
-mod5
-
-fix_params <- . %>%
-  str_replace("\\(Intercept\\)", "Intercept") 
-
-fix_summaries <- . %>% 
-  str_replace("b_", "")
-
-mod <- suppressWarnings(broom::tidy(mod6)) %>%
-    filter(effect == "fixed") %>%
-    select(term, estimate) %>% 
-    mutate(term = fix_params(term))
-
-  # calc HDCI
-mod_hdci <- bayestestR::hdi(mod6, ci = 0.95) %>% as_tibble %>%
-  mutate_if(is.numeric, round, digits = 3) %>%
-  unite(HDI, CI_low, CI_high, sep = ", ") %>%
-  mutate(HDI = paste0("[", HDI, "]"), 
-         term = fix_summaries(Parameter)) %>%
-  select(term, HDI)
-
-# calc ROPE for HDCI
-mod_rope <- bayestestR::rope(mod6, ci = 0.95, range = c(-0.1, 0.1)) %>% 
-  as_tibble %>% 
-  mutate(term = fix_summaries(Parameter)) %>% 
-  select(term, ROPE = ROPE_Percentage)
-
-# calc prob that given beta is > 0
-p_beta <- bayestestR::p_direction(mod6) %>% as_tibble %>% 
-  mutate(term = fix_summaries(Parameter)) %>% 
-  select(term, MPE = pd)
-
-  left_join(mod, mod_hdci, by = "term") %>%
-    left_join(., mod_rope, by = "term") %>%
-    left_join(., p_beta, by = "term") %>% 
-    select(term, estimate, HDI, ROPE, MPE) %>% 
-    mutate_if(is.numeric, round, digits = 3)
-
-
-
-
-```
 

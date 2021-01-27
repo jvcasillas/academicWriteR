@@ -4,9 +4,16 @@
 \alias{mod_to_table}
 \title{Model to table}
 \usage{
-mod_to_table(model, param_names = NULL, font_size = 11,
-  left_align = 1, width = NULL, col = NULL, ci = 0.95,
-  rope = c(-0.1, 0.1))
+mod_to_table(
+  model,
+  param_names = NULL,
+  font_size = 11,
+  left_align = 1,
+  width = NULL,
+  col = NULL,
+  ci = 0.95,
+  rope = c(-0.1, 0.1)
+)
 }
 \arguments{
 \item{model}{A model object}
@@ -26,8 +33,8 @@ mod_to_table(model, param_names = NULL, font_size = 11,
 \item{rope}{Range of the ROPE interval for brms models}
 }
 \description{
-This function takes a model object and generates a table in pdf, html or
-word format
+This function takes a model object and generates a table in pdf or word
+format.
 }
 \examples{
 mod <- lm(mpg ~ drat, data = mtcars)

@@ -26,7 +26,7 @@ print_nmc_p <- function(table, model, latex = TRUE) {
 
   # Collect appropriate values from model table
   stat   <- tidy_table[tidy_table$term == model, 'statistic']
-  df     <- tidy_table[tidy_table$term == model, 'Chi.Df']
+  df     <- tidy_table[tidy_table$term == model, 'df']
   praw   <- tidy_table[tidy_table$term == model, 'p.value']
 
   if (latex == TRUE) {
