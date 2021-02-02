@@ -18,16 +18,15 @@ Encoding: UTF-8
 Depends:
     R (>= 3.5.0)
 Imports:
+    broom.mixed, 
+    broom, 
     tidyr,
     dplyr,
     lme4, 
-    broom, 
-    broom.mixed,
     readr, 
     tibble, 
     tidytext, 
     rlang, 
-    stats, 
     knitr, 
     kableExtra,
     flextable, 
