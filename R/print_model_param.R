@@ -35,14 +35,12 @@ print_model_param.default <- function(model, parameter, latex = TRUE){
 
 
 #' @export
-#' @import broom.mixed
-
 print_model_param.lmerMod <- function(model, parameter, latex = TRUE) {
 
   use_latex <- determine_latex()
 
   # Tidy model to facilitate printing
-  mod <- suppressWarnings(broom::tidy(model, conf.int = TRUE)) %>%
+  mod <- suppressWarnings(broom.mixed::tidy(model, conf.int = TRUE)) %>%
     mutate(across(-.data$term, give_n_digits))
 
   # Filter row with parameter of interest

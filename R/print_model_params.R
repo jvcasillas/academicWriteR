@@ -21,7 +21,7 @@
 
 print_model_params <- function(model, predictor, parameter) {
 
-  tidy_model <- suppressWarnings(broom::tidy(model))
+  tidy_model <- suppressWarnings(broom.mixed::tidy(model))
 
   # Extract wanted value from model output
   val_in <- round(tidy_model[tidy_model$term == predictor, parameter], 2)

@@ -4,3 +4,5 @@
 README_cache
 docs
 ^\.github$
+
+^testing_files

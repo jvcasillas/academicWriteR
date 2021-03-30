@@ -21,7 +21,6 @@ in parenthesis. Includes confidence intervals, stat type and p-values.
 \examples{
 library(lme4)
 library(lmerTest)
-library(broom.mixed)
 mod1 <- lm(mpg ~ wt, data = mtcars)
 mod2 <- lmer(Reaction ~ 1 + Days + (1|Subject), data = sleepstudy,
              REML = FALSE)

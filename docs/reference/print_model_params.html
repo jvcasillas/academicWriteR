@@ -73,7 +73,7 @@ the numeric output." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">academicWriteR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -146,7 +146,9 @@ the numeric output.</p>
 <span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>Subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleepstudy</span>,
              REML <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'>print_model_params</span><span class='op'>(</span>model <span class='op'>=</span> <span class='va'>mod1</span>, predictor <span class='op'>=</span> <span class='st'>"wt"</span>, parameter <span class='op'>=</span> <span class='st'>"estimate"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "-5.34"</div><div class='input'><span class='fu'>print_model_params</span><span class='op'>(</span>model <span class='op'>=</span> <span class='va'>mod2</span>, predictor <span class='op'>=</span> <span class='st'>"Days"</span>, parameter <span class='op'>=</span> <span class='st'>"estimate"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'broom.mixed':</span>
+#&gt; <span class='message'>  method      from </span>
+#&gt; <span class='message'>  tidy.gamlss broom</span></div><div class='output co'>#&gt; [1] "-5.34"</div><div class='input'><span class='fu'>print_model_params</span><span class='op'>(</span>model <span class='op'>=</span> <span class='va'>mod2</span>, predictor <span class='op'>=</span> <span class='st'>"Days"</span>, parameter <span class='op'>=</span> <span class='st'>"estimate"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "10.47"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

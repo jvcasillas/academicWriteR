@@ -1,7 +1,7 @@
 Package: academicWriteR
 Type: Package
 Title: Helper Functions for Academic Writing and Organization
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
     person(given = "Joseph",
            family = "Casillas",
@@ -18,16 +18,15 @@ Encoding: UTF-8
 Depends:
     R (>= 3.5.0)
 Imports:
+    broom.mixed, 
+    broom, 
     tidyr,
     dplyr,
     lme4, 
-    broom, 
-    broom.mixed,
     readr, 
     tibble, 
     tidytext, 
     rlang, 
-    stats, 
     knitr, 
     kableExtra,
     flextable, 
