@@ -15,7 +15,7 @@ results each sentence should start on a new line. Inline code chunks should
 also start on a new line.
 }
 \examples{
-# word_count("test.Rmd")
+# count_words("test.Rmd")
 }
 \keyword{Word}
 \keyword{count}
