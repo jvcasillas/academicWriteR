@@ -10,7 +10,7 @@
 #' @importFrom rlang .data
 #' @export
 #' @examples
-#' # word_count("test.Rmd")
+#' # count_words("test.Rmd")
 
 # Get word count
 count_words <- function(file) {
