@@ -15,7 +15,9 @@
 #' @import dplyr
 #' @import tidyr
 #' @import stringr
+#' @import lme4
 #' @importFrom rlang .data
+#' @importFrom methods is
 #' @export
 #' @examples
 #' mod <- lm(mpg ~ drat, data = mtcars)
@@ -306,7 +308,7 @@ set_col_names <- function(model, doc_type = doc_type) {
                SE = .data$std.error, `CI low` = .data$conf.low,
                `CI high` = .data$conf.high, t = statistic, .data$df,
                p = .data$p.value)
-    } else if (class(model)[1] == "brmsfit") {
+    } else if (is(model, "brmsfit")) {
       rename_cols <- . %>%
         select(Parameter = .data$term, Estimate = .data$estimate, .data$HDI,
                .data$ROPE, .data$MPE)
@@ -324,7 +326,7 @@ set_col_names <- function(model, doc_type = doc_type) {
                SE = .data$std.error, `CI low` = .data$conf.low,
                `CI high` = .data$conf.high, `\\emph{t}` = statistic, .data$df,
                `\\emph{p}` = .data$p.value)
-    } else if (class(model)[1] == "brmsfit") {
+    } else if (is(model, "brmsfit")) {
       rename_cols <- . %>%
         select(Parameter = .data$term, Estimate = .data$estimate, .data$HDI,
                .data$ROPE, .data$MPE)
@@ -361,7 +363,7 @@ parameter_adj <- function(mod, param_names = NULL) {
 # Table template for when knitting to word
 #
 set_flex <- function(model) {
-  if (class(model) == "brmsfit") {
+  if (is(model, "brmsfit")) {
     standard_flex <- . %>%
     flextable::flextable(.) %>%
     flextable::font(fontname = "Times", part = "all") %>%

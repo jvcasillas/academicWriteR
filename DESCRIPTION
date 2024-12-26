@@ -22,7 +22,6 @@ Imports:
     broom, 
     tidyr,
     dplyr,
-    lme4, 
     readr, 
     tibble, 
     tidytext, 
@@ -33,8 +32,10 @@ Imports:
     officer, 
     forcats, 
     bayestestR, 
-    stringr
+    stringr, 
+    methods, 
+    lme4
 Suggests: 
     lmerTest
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
